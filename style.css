@@ -1,0 +1,377 @@
+:root {
+  --desk: #e4dccb;
+  --desk-line: #d3c8ae;
+  --ink: #2b241a;
+  --muted: #7a6f5c;
+  --grey-face: #c7c7c7;
+  --grey-dark: #1c1c1c;
+  --wood-face: #e7b96a;
+  --wood-dark: #3b2a12;
+  --gold-face: #f2c744;
+  --green-face: #eaf4e2;
+  --green-dark: #4f7a3d;
+  --accent: #b23b2e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(ellipse at 50% -10%, #f2ead8 0%, var(--desk) 55%),
+    repeating-linear-gradient(
+      90deg,
+      var(--desk-line) 0 2px,
+      transparent 2px 140px
+    );
+  font-family: "Georgia", "Iowan Old Style", serif;
+  color: var(--ink);
+}
+
+.wrap {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 44px 24px 70px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 26px;
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.sub {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0 0 40px;
+}
+
+/* Word shelf */
+.shelf-wrap {
+  background: #fbf7ee;
+  border: 1px solid var(--desk-line);
+  border-radius: 6px;
+  padding: 18px;
+  min-height: 92px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.shelf-wrap.empty {
+  justify-content: center;
+}
+
+.shelf-empty-msg {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.shelf-tile {
+  min-width: 46px;
+  height: 46px;
+  padding: 0 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow:
+    0 3px rgba(0, 0, 0, 0.16),
+    0 4px 6px rgba(0, 0, 0, 0.12);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 46px;
+}
+
+.btn-reset {
+  font-family: "Helvetica Neue", Aria, sans-serif;
+  font-size: 12px;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--desk-line);
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Cube stage */
+.stage-panel {
+  background: #fbf7ee;
+  border: 1px solid var(--desk-line);
+  border-radius: 8px;
+  padding: 30px 20px;
+  margin-bottom: 40px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage-placeholder {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.stage-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--muted);
+  line-height: 1;
+}
+
+.btn-close:hover {
+  color: var(--accent);
+}
+
+.stage {
+  perspective: 900px;
+  margin: 0 auto 16px;
+  cursor: grab;
+  touch-action: none;
+  position: relative;
+}
+
+.stage.grabbing {
+  cursor: grabbing;
+}
+
+/* width/height/position are set inline per-cube in JS, since every cube "size" (single/big/small/big-rect/small-rect) has its own
+box proportions (w x h x d). Only the shared 3D behavior lives here.
+*/
+
+.cube {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  transition: transform 0.05s linear;
+}
+
+.cube.snapping {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.face {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 2px;
+  font-weight: 700;
+  backface-visibility: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.face-text {
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.face-text-flip {
+  transform: rotate(180deg);
+}
+
+.face-text.selected {
+  outline: 4px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.face-text-placeholder {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.stage-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.selected-hint {
+  font-size: 13px;
+  color: var(--muted);
+  min-width: 170px;
+  text-align: left;
+}
+
+.selected-hint b {
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.btn-add {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.btn-add:disabled {
+  background: #c9bfae;
+  cursor: not-allowed;
+}
+
+.btn-add:not(:disabled):hover {
+  background: #952f24;
+}
+
+.drag-hint {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: -6px;
+  margin-bottom: 14px;
+}
+
+/* Palette */
+.shelf-label {
+  font-family: "Helvetica Neue", Aria, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.palette {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.p-item {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  padding: 0;
+  box-shadow:
+    0 3px rgba(0, 0, 0, 0.16),
+    0 4px 6px rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+  font-family: inherit;
+  transition: transform 0.1s ease;
+}
+
+.p-item:hover {
+  transform: translateY(-2px);
+}
+
+.p-item.active {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* sizes reflect the physical cube system */
+.p-item.size-single {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+}
+
+.p-item.size-big {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+}
+
+.p-item.size-small {
+    width: 38px;
+    height: 38px;
+    font-size: 15px;
+}
+
+.p-item.size-big-rect {
+    width: 60px;
+    height: 76px;
+    font-size: 20px;
+}
+
+.p-item.size-small-rect {
+    width: 38px;
+    height: 52px;
+    font-size: 13px;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+footer {
+    margin-top: 40px;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+}
