@@ -258,6 +258,7 @@ function openCube(cube, btnEl) {
     .getElementById("addBtn")
     .addEventListener("click", addSelectedToWord);
   document.querySelectorAll("#cube3d .face-text").forEach((textEl) => {
+    if (textEl.classList.contains("face-text-placeholder")) return;
     textEl.addEventListener("click", (e) => {
       e.stopPropagation();
       selectFace(textEl);
@@ -314,11 +315,21 @@ function renderShelf() {
   }
   wrap.classList.remove("empty");
   wrap.innerHTML = word
-    .map((w) => {
+    .map((w, i) => {
       const c = COLORS[w.color];
-      return `<div class="shelf-tile" style="background:${c.face};color:${c.dark}">${w.text}</div>`;
+      return `<div class="shelf-tile" style="background:${c.face};color:${c.dark}"><span class="shelf-tile-text">${w.text}</span>
+      <button class="shelf-tile-remove" data-index="${i}" title="Удалить">x</button>
+      </div>`;
     })
     .join("");
+
+    wrap.querySelectorAll(".shelf-tile-remove").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const idx = Number(btn.dataset.index);
+        word.splice(idx, 1);
+        renderShelf();
+      });
+    });
 }
 
 document.getElementById("resetBtn").addEventListener("click", () => {
