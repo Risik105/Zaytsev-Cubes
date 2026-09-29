@@ -5,7 +5,7 @@ const CUBES = [
   {
     id: "У",
     label: "У",
-    type: "Золотой",
+    type: "Гласный",
     size: "big",
     color: "gold",
     faces: ["У", "О", "А", "Э", "Ы", "🍓"],
@@ -14,7 +14,7 @@ const CUBES = [
   {
     id: "ю",
     label: "ю",
-    type: "Железный",
+    type: "Гласный",
     size: "small",
     color: "gold",
     faces: ["ю", "ё", "я", "е", "и", "🍓"],
@@ -23,7 +23,7 @@ const CUBES = [
   {
     id: "й",
     label: "й",
-    type: "Железный",
+    type: "Звонкий мягкий согласный",
     size: "small-rect",
     color: "grey",
     faces: [{ main: "й", flip: "" }, { main: "йя", flip: "йа" }, { main: "", flip: "йо" }, { main: "йи", flip: "" }, "йю", "йе"],
@@ -32,7 +32,7 @@ const CUBES = [
   {
     id: "Л",
     label: "Л",
-    type: "Железный",
+    type: "Звонкий твёрдый согласный",
     size: "big",
     color: "grey",
     faces: ["ЛУ", "ЛО", "ЛА", "ЛЭ", "ЛЫ", "Л"],
@@ -41,7 +41,7 @@ const CUBES = [
   {
     id: "ль",
     label: "ль",
-    type: "Железный",
+    type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
     faces: ["лю", "лё", "ля", "ле", "ли", "ль"],
@@ -50,7 +50,7 @@ const CUBES = [
   {
     id: "М",
     label: "М",
-    type: "Железный",
+    type: "Звонкий твёрдый согласный",
     size: "big",
     color: "grey",
     faces: ["МУ", "МО", "МА", "МЭ", "МЫ", "М"],
@@ -59,7 +59,7 @@ const CUBES = [
   {
     id: "мь",
     label: "мь",
-    type: "Железный",
+    type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
     faces: ["мю", "мё", "мя", "ме", "ми", "мь"],
@@ -68,7 +68,7 @@ const CUBES = [
   {
     id: "Н",
     label: "Н",
-    type: "Железный",
+    type: "Звонкий твёрдый согласный",
     size: "big",
     color: "grey",
     faces: ["НУ", "НО", "НА", "НЭ", "НЫ", "Н"],
@@ -77,7 +77,7 @@ const CUBES = [
   {
     id: "нь",
     label: "нь",
-    type: "Железный",
+    type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
     faces: ["ню", "нё", "ня", "не", "ни", "нь"],
@@ -86,7 +86,7 @@ const CUBES = [
   {
     id: "Р",
     label: "Р",
-    type: "Железный",
+    type: "Звонкий твёрдый согласный",
     size: "big",
     color: "grey",
     faces: ["РУ", "РО", "РА", "РЭ", "РЫ", "Р"],
@@ -95,7 +95,7 @@ const CUBES = [
   {
     id: "рь",
     label: "рь",
-    type: "Железный",
+    type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
     faces: ["рю", "рё", "ря", "ре", "ри", "рь"],
@@ -104,7 +104,7 @@ const CUBES = [
   {
     id: "В",
     label: "В",
-    type: "Железный",
+    type: "Звонкий твёрдый согласный",
     size: "big",
     color: "grey",
     faces: ["ВУ", "ВО", "ВА", "ВЭ", "ВЫ", "В"],
@@ -113,7 +113,7 @@ const CUBES = [
   {
     id: "вь",
     label: "вь",
-    type: "Железный",
+    type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
     faces: ["вю", "вё", "вя", "ве", "ви", "вь"],
@@ -122,7 +122,7 @@ const CUBES = [
   {
     id: "З",
     label: "З",
-    type: "Железный",
+    type: "Звонкий твёрдый согласный",
     size: "big",
     color: "grey",
     faces: ["ЗУ", "ЗО", "ЗА", "ЗЭ", "ЗЫ", "З"],
@@ -131,16 +131,16 @@ const CUBES = [
   {
     id: "зь",
     label: "зь",
-    type: "Железный",
+    type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
     faces: ["зю", "зё", "зя", "зе", "зи", "зь"],
   },
 
   {
-    id: "v-hard",
+    id: "Б",
     label: "Б",
-    type: "Железный",
+    type: "Звонкий твёрдый согласный",
     size: "big",
     color: "grey",
     faces: ["БУ", "БО", "БА", "БЭ", "БЫ", "Б"],
@@ -149,7 +149,7 @@ const CUBES = [
   {
     id: "бь",
     label: "бь",
-    type: "Железный",
+    type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
     faces: ["бю", "бё", "бя", "бе", "би", "бь"],
@@ -158,7 +158,7 @@ const CUBES = [
   {
     id: "Д",
     label: "Д",
-    type: "Железный",
+    type: "Звонкий твёрдый согласный",
     size: "big",
     color: "grey",
     faces: ["ДУ", "ДО", "ДА", "ДЭ", "ДЫ", "Д"],
@@ -167,7 +167,7 @@ const CUBES = [
   {
     id: "дь",
     label: "дь",
-    type: "Железный",
+    type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
     faces: ["дю", "дё", "дя", "де", "ди", "дь"],
@@ -176,7 +176,7 @@ const CUBES = [
   {
     id: "Г",
     label: "Г",
-    type: "Железный",
+    type: "Звонкий твёрдый согласный",
     size: "big",
     color: "grey",
     faces: ["ГУ", "ГО", "ГА", "ГЭ", "ГЫ", "Г"],
@@ -185,7 +185,7 @@ const CUBES = [
   {
     id: "гь",
     label: "гь",
-    type: "Железный",
+    type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
     faces: ["гю", "гё", "гя", "ге", "ги", "гь"],
@@ -194,7 +194,7 @@ const CUBES = [
   {
     id: "Ж",
     label: "Ж",
-    type: "Железный",
+    type: "Звонкий твёрдый согласный",
     size: "big-rect",
     color: "grey",
     faces: [{ main: "Ж", flip: "ЖЬ" }, { main: "ЖО", flip: "ЖЁ" }, { main: "ЖЕ", flip: "" }, { main: "ЖИ", flip: "" }, "ЖУ", "ЖА"],
@@ -203,7 +203,7 @@ const CUBES = [
   {
     id: "Ф",
     label: "Ф",
-    type: "Деревянный",
+    type: "Глухой твёрдый согласный",
     size: "big",
     color: "wood",
     faces: ["ФУ", "ФО", "ФА", "ФЭ", "ФЫ", "Ф"],
@@ -212,7 +212,7 @@ const CUBES = [
   {
     id: "фь",
     label: "фь",
-    type: "Деревянный",
+    type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
     faces: ["фю", "фё", "фя", "фе", "фи", "фь"],
@@ -221,7 +221,7 @@ const CUBES = [
   {
     id: "С",
     label: "С",
-    type: "Деревянный",
+    type: "Глухой твёрдый согласный",
     size: "big",
     color: "wood",
     faces: ["СУ", "СО", "СА", "СЭ", "СЫ", "С"],
@@ -230,7 +230,7 @@ const CUBES = [
   {
     id: "сь",
     label: "сь",
-    type: "Деревянный",
+    type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
     faces: ["сю", "сё", "ся", "се", "си", "сь"],
@@ -239,7 +239,7 @@ const CUBES = [
   {
     id: "П",
     label: "П",
-    type: "Деревянный",
+    type: "Глухой твёрдый согласный",
     size: "big",
     color: "wood",
     faces: ["ПУ", "ПО", "ПА", "ПЭ", "ПЫ", "П"],
@@ -248,7 +248,7 @@ const CUBES = [
   {
     id: "пь",
     label: "пь",
-    type: "Деревянный",
+    type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
     faces: ["пю", "пё", "пя", "пе", "пи", "пь"],
@@ -257,7 +257,7 @@ const CUBES = [
   {
     id: "Т",
     label: "Т",
-    type: "Деревянный",
+    type: "Глухой твёрдый согласный",
     size: "big",
     color: "wood",
     faces: ["ТУ", "ТО", "ТА", "ТЭ", "ТЫ", "Т"],
@@ -266,7 +266,7 @@ const CUBES = [
   {
     id: "ть",
     label: "ть",
-    type: "Деревянный",
+    type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
     faces: ["тю", "тё", "тя", "те", "ти", "ть"],
@@ -275,7 +275,7 @@ const CUBES = [
   {
     id: "К",
     label: "К",
-    type: "Деревянный",
+    type: "Глухой твёрдый согласный",
     size: "big",
     color: "wood",
     faces: ["КУ", "КО", "КА", "КЭ", "КЫ", "К"],
@@ -284,7 +284,7 @@ const CUBES = [
   {
     id: "кь",
     label: "кь",
-    type: "Деревянный",
+    type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
     faces: ["кю", "кё", "кя", "ке", "ки", "кь"],
@@ -293,7 +293,7 @@ const CUBES = [
   {
     id: "Х",
     label: "Х",
-    type: "Деревянный",
+    type: "Глухой твёрдый согласный",
     size: "big",
     color: "wood",
     faces: ["ХУ", "ХО", "ХА", "ХЭ", "ХЫ", "Х"],
@@ -302,7 +302,7 @@ const CUBES = [
   {
     id: "хь",
     label: "хь",
-    type: "Деревянный",
+    type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
     faces: ["хю", "хё", "хя", "хе", "хи", "хь"],
@@ -311,7 +311,7 @@ const CUBES = [
   {
     id: "Ш",
     label: "Ш",
-    type: "Деревянный",
+    type: "Глухой твёрдый согласный",
     size: "big-rect",
     color: "wood",
     faces: [{ main: "Ш", flip: "ШЬ" }, { main: "ШО", flip: "ШЁ" }, { main: "ШЕ", flip: "" }, { main: "ШИ", flip: "" }, "ШУ", "ША"],
@@ -320,7 +320,7 @@ const CUBES = [
   {
     id: "Ц",
     label: "Ц",
-    type: "Деревянный",
+    type: "Глухой твёрдый согласный",
     size: "big-rect",
     color: "wood",
     faces: [{ main: "ЦО", flip: "" }, { main: "ЦА", flip: "" }, { main: "ЦЕ", flip: "" }, { main: "ЦЫ", flip: "ЦИ" }, "Ц", "ЦУ"],
@@ -329,7 +329,7 @@ const CUBES = [
   {
     id: "ч",
     label: "ч",
-    type: "Деревянный",
+    type: "Глухой мягкий согласный",
     size: "small-rect",
     color: "wood",
     faces: [{ main: "ч", flip: "чь" }, { main: "чо", flip: "чё" }, { main: "че", flip: "" }, { main: "чи", flip: "" }, "чу", "ча"],
@@ -338,11 +338,148 @@ const CUBES = [
   {
     id: "щ",
     label: "щ",
-    type: "Деревянный",
+    type: "Глухой мягкий согласный",
     size: "small-rect",
     color: "wood",
     faces: [{ main: "щ", flip: "щь" }, { main: "що", flip: "щё" }, { main: "ще", flip: "" }, { main: "щи", flip: "" }, "щу", "ща"],
   }
+];
+
+const SPECIAL_SYMBOLS = [
+  {
+    label: "Кс",
+    title: "Красная строка"
+  },
+
+  {
+    label: "Зб",
+    title: "Заглавная буква"
+  },
+
+  {
+    label: "Ъ",
+    title: "Твёрдый знак"
+  },
+
+  {
+    label: "Ь",
+    title: "Мягкий знак"
+  },
+
+  {
+    label: " ",
+    title: "Пробел"
+  },
+
+  {
+    label: ",",
+    title: "Запятая"
+  },
+
+  {
+    label: ";",
+    title: "Точка с запятой"
+  },
+
+  {
+    label: "„",
+    title: "Открывающие кавычки-лапки"
+  },
+
+  {
+    label: "”",
+    title: "Закрывающие кавычки-лапки"
+  },
+
+  {
+    label: "’",
+    title: "Запятая сверху"
+  },
+
+  {
+    label: "…",
+    title: "Троеточие"
+  },
+
+  {
+    label: ":",
+    title: "Двоеточие"
+  },
+
+  {
+    label: ";",
+    title: "Точка с запятой"
+  },
+
+  {
+    label: "?",
+    title: "Вопросительный знак"
+  },
+
+  {
+    label: "!",
+    title: "Восклицательный знак"
+  },
+
+  {
+    label: ".",
+    title: "Точка"
+  },
+
+  {
+    label: "-",
+    title: "Дефис"
+  },
+
+  {
+    label: "—",
+    title: "Тире"
+  },
+
+  {
+    label: "/",
+    title: "Косая черта"
+  },
+
+  {
+    label: "[",
+    title: "Открывающая квадратная скобка"
+  },
+
+  {
+    label: "]",
+    title: "Закрывающая квадратная скобка"
+  },
+
+  {
+    label: "«",
+    title: "Открывающие кавычки-ёлочки"
+  },
+
+  {
+    label: "»",
+    title: "Закрывающие кавычки-ёлочки"
+  },
+
+  {
+    label: "(",
+    title: "Открывающая скобка"
+  },
+
+  {
+    label: ")",
+    title: "Закрывающая скобка"
+  },
+
+  {
+    label: "*",
+    title: "Звёздочка"
+  },
+
+  {
+    label: "`",
+    title: "Ударение"
+  },
 ];
 
 const COLORS = {
@@ -471,17 +608,40 @@ let activeCube = null;
 let activeCubeControls = null; // set by setupDrag(); exposes snapToFace()
 
 // Palette render
+function renderPalette(cubes, containerEl) {
+  cubes.forEach((cube) => {
+    const btn = document.createElement("button");
+    btn.className = `p-item size-${cube.size}`;
+    btn.style.background = COLORS[cube.color].face;
+    btn.style.color = COLORS[cube.color].dark;
+    btn.textContent = cube.label;
+    btn.title = cube.type;
+    btn.addEventListener("click", () => openCube(cube, btn));
+    containerEl.appendChild(btn);
+  });
+}
+
 const paletteEl = document.getElementById("palette");
-CUBES.forEach((cube) => {
-  const btn = document.createElement("button");
-  btn.className = `p-item size-${cube.size}`;
-  btn.style.background = COLORS[cube.color].face;
-  btn.style.color = COLORS[cube.color].dark;
-  btn.textContent = cube.label;
-  btn.title = cube.type;
-  btn.addEventListener("click", () => openCube(cube, btn));
-  paletteEl.appendChild(btn);
-});
+renderPalette(CUBES, paletteEl);
+
+// Special symbols are plain buttons - no 3D stage, no selection step.
+// A click adds the symbol straight to the word shelf.
+const specialPaletteEl = document.getElementById("specialPalette");
+if (specialPaletteEl) {
+  SPECIAL_SYMBOLS.forEach((sym) => {
+    const btn = document.createElement("button");
+    btn.className = "p-item size-single";
+    btn.style.background = COLORS.green.face;
+    btn.style.color = COLORS.green.dark;
+    btn.textContent = sym.label;
+    btn.title = sym.title;
+    btn.addEventListener("click", () => {
+      word.push({ text: sym.label, color: "green" });
+      renderShelf();
+    });
+    specialPaletteEl.appendChild(btn);
+  });
+}
 
 function openCube(cube, btnEl) {
   activeCube = cube;

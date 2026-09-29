@@ -306,7 +306,7 @@ box proportions (w x h x d). Only the shared 3D behavior lives here.
 
 /* Palette */
 .shelf-label {
-  font-family: "Helvetica Neue", Aria, sans-serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -376,6 +376,37 @@ box proportions (w x h x d). Only the shared 3D behavior lives here.
     width: 38px;
     height: 52px;
     font-size: 13px;
+}
+
+.palette-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.palette-row .palette {
+  flex: 1 1 480px;
+}
+
+.special-panel {
+  flex: 0 0 180px;
+  background: #fbf7ee;
+  border: 1px solid var(--desk-line);
+  border-radius: 8px;
+  padding: 16px 14px;
+}
+
+.special-panel .shelf-label {
+  margin-bottom: 10px;
+}
+
+.special-palette {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  gap: 8px;
 }
 
 .legend {

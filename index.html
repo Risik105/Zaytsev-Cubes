@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="wrap">
+        <div class="wrap">
         <h1>Кубики Зайцева в 3D</h1>
         <p class="sub">Выбери кубик внизу → покрути → кликни грань → добавь к слову</p>
 
@@ -23,7 +23,14 @@
             <div class="stage-placeholder" id="placeholder">Тут появится кубик, когда ты выберешь его внизу ↓</div>
         </div>
 
-        <div class="palette" id="palette"></div>
+        <div class="palette-row">
+            <div class="palette" id="palette"></div>
+            <aside class="special-panel">
+                <p class="shelf-label">Спецсимволы</p>
+                <div class="palette special-palette" id="specialPalette"></div>
+            </aside>
+
+        </div>
 
         <div class="legend">
             <span>
