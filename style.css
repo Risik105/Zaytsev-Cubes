@@ -28,7 +28,7 @@ body {
       var(--desk-line) 0 2px,
       transparent 2px 140px
     );
-  font-family: "Georgia", "Iowan Old Style", sans-serif;
+  font-family: "Arial", "Calibri", serif;
   color: var(--ink);
 }
 

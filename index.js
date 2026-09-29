@@ -3,66 +3,346 @@
 
 const CUBES = [
   {
-    id: "v",
+    id: "У",
     label: "У",
-    type: "vowel",
+    type: "Золотой",
     size: "big",
     color: "gold",
     faces: ["У", "О", "А", "Э", "Ы", "🍓"],
   },
 
   {
-    id: "tech-1",
-    label: ",",
-    type: "punct",
-    size: "single",
-    color: "green",
-    faces: [",", ",", ",", ",", ",", ","],
+    id: "ю",
+    label: "ю",
+    type: "Железный",
+    size: "small",
+    color: "gold",
+    faces: ["ю", "ё", "я", "е", "и", "🍓"],
   },
 
   {
-    id: "v-hard",
+    id: "й",
+    label: "й",
+    type: "Железный",
+    size: "small-rect",
+    color: "grey",
+    faces: [{ main: "й", flip: "" }, { main: "йя", flip: "йа" }, { main: "", flip: "йо" }, { main: "йи", flip: "" }, "йю", "йе"],
+  },
+
+  {
+    id: "Л",
+    label: "Л",
+    type: "Железный",
+    size: "big",
+    color: "grey",
+    faces: ["ЛУ", "ЛО", "ЛА", "ЛЭ", "ЛЫ", "Л"],
+  },
+
+  {
+    id: "ль",
+    label: "ль",
+    type: "Железный",
+    size: "small",
+    color: "grey",
+    faces: ["лю", "лё", "ля", "ле", "ли", "ль"],
+  },
+
+  {
+    id: "М",
+    label: "М",
+    type: "Железный",
+    size: "big",
+    color: "grey",
+    faces: ["МУ", "МО", "МА", "МЭ", "МЫ", "М"],
+  },
+
+  {
+    id: "мь",
+    label: "мь",
+    type: "Железный",
+    size: "small",
+    color: "grey",
+    faces: ["мю", "мё", "мя", "ме", "ми", "мь"],
+  },
+
+  {
+    id: "Н",
+    label: "Н",
+    type: "Железный",
+    size: "big",
+    color: "grey",
+    faces: ["НУ", "НО", "НА", "НЭ", "НЫ", "Н"],
+  },
+
+  {
+    id: "нь",
+    label: "нь",
+    type: "Железный",
+    size: "small",
+    color: "grey",
+    faces: ["ню", "нё", "ня", "не", "ни", "нь"],
+  },
+
+  {
+    id: "Р",
+    label: "Р",
+    type: "Железный",
+    size: "big",
+    color: "grey",
+    faces: ["РУ", "РО", "РА", "РЭ", "РЫ", "Р"],
+  },
+
+  {
+    id: "рь",
+    label: "рь",
+    type: "Железный",
+    size: "small",
+    color: "grey",
+    faces: ["рю", "рё", "ря", "ре", "ри", "рь"],
+  },
+
+  {
+    id: "В",
     label: "В",
-    type: "hard",
+    type: "Железный",
     size: "big",
     color: "grey",
     faces: ["ВУ", "ВО", "ВА", "ВЭ", "ВЫ", "В"],
   },
+
   {
-    id: "v-soft",
-    label: "в",
-    type: "soft",
+    id: "вь",
+    label: "вь",
+    type: "Железный",
     size: "small",
     color: "grey",
     faces: ["вю", "вё", "вя", "ве", "ви", "вь"],
   },
 
   {
-    id: "d-hard",
+    id: "З",
+    label: "З",
+    type: "Железный",
+    size: "big",
+    color: "grey",
+    faces: ["ЗУ", "ЗО", "ЗА", "ЗЭ", "ЗЫ", "З"],
+  },
+
+  {
+    id: "зь",
+    label: "зь",
+    type: "Железный",
+    size: "small",
+    color: "grey",
+    faces: ["зю", "зё", "зя", "зе", "зи", "зь"],
+  },
+
+  {
+    id: "v-hard",
+    label: "Б",
+    type: "Железный",
+    size: "big",
+    color: "grey",
+    faces: ["БУ", "БО", "БА", "БЭ", "БЫ", "Б"],
+  },
+
+  {
+    id: "бь",
+    label: "бь",
+    type: "Железный",
+    size: "small",
+    color: "grey",
+    faces: ["бю", "бё", "бя", "бе", "би", "бь"],
+  },
+
+  {
+    id: "Д",
     label: "Д",
-    type: "hard",
+    type: "Железный",
     size: "big",
     color: "grey",
     faces: ["ДУ", "ДО", "ДА", "ДЭ", "ДЫ", "Д"],
   },
 
   {
-    id: "zh",
+    id: "дь",
+    label: "дь",
+    type: "Железный",
+    size: "small",
+    color: "grey",
+    faces: ["дю", "дё", "дя", "де", "ди", "дь"],
+  },
+
+  {
+    id: "Г",
+    label: "Г",
+    type: "Железный",
+    size: "big",
+    color: "grey",
+    faces: ["ГУ", "ГО", "ГА", "ГЭ", "ГЫ", "Г"],
+  },
+
+  {
+    id: "гь",
+    label: "гь",
+    type: "Железный",
+    size: "small",
+    color: "grey",
+    faces: ["гю", "гё", "гя", "ге", "ги", "гь"],
+  },
+
+  {
+    id: "Ж",
     label: "Ж",
-    type: "hard-only",
+    type: "Железный",
     size: "big-rect",
     color: "grey",
     faces: [{ main: "Ж", flip: "ЖЬ" }, { main: "ЖО", flip: "ЖЁ" }, { main: "ЖЕ", flip: "" }, { main: "ЖИ", flip: "" }, "ЖУ", "ЖА"],
   },
 
   {
-    id: "j",
-    label: "й",
-    type: "soft-only",
-    size: "small-rect",
-    color: "grey",
-    faces: [{ main: "й", flip: "" }, { main: "йя", flip: "йа" }, { main: "", flip: "йо" }, { main: "йи", flip: "" }, "йю", "йе"],
+    id: "Ф",
+    label: "Ф",
+    type: "Деревянный",
+    size: "big",
+    color: "wood",
+    faces: ["ФУ", "ФО", "ФА", "ФЭ", "ФЫ", "Ф"],
   },
+
+  {
+    id: "фь",
+    label: "фь",
+    type: "Деревянный",
+    size: "small",
+    color: "wood",
+    faces: ["фю", "фё", "фя", "фе", "фи", "фь"],
+  },
+
+  {
+    id: "С",
+    label: "С",
+    type: "Деревянный",
+    size: "big",
+    color: "wood",
+    faces: ["СУ", "СО", "СА", "СЭ", "СЫ", "С"],
+  },
+
+  {
+    id: "сь",
+    label: "сь",
+    type: "Деревянный",
+    size: "small",
+    color: "wood",
+    faces: ["сю", "сё", "ся", "се", "си", "сь"],
+  },
+
+  {
+    id: "П",
+    label: "П",
+    type: "Деревянный",
+    size: "big",
+    color: "wood",
+    faces: ["ПУ", "ПО", "ПА", "ПЭ", "ПЫ", "П"],
+  },
+
+  {
+    id: "пь",
+    label: "пь",
+    type: "Деревянный",
+    size: "small",
+    color: "wood",
+    faces: ["пю", "пё", "пя", "пе", "пи", "пь"],
+  },
+
+  {
+    id: "Т",
+    label: "Т",
+    type: "Деревянный",
+    size: "big",
+    color: "wood",
+    faces: ["ТУ", "ТО", "ТА", "ТЭ", "ТЫ", "Т"],
+  },
+
+  {
+    id: "ть",
+    label: "ть",
+    type: "Деревянный",
+    size: "small",
+    color: "wood",
+    faces: ["тю", "тё", "тя", "те", "ти", "ть"],
+  },
+
+  {
+    id: "К",
+    label: "К",
+    type: "Деревянный",
+    size: "big",
+    color: "wood",
+    faces: ["КУ", "КО", "КА", "КЭ", "КЫ", "К"],
+  },
+
+  {
+    id: "кь",
+    label: "кь",
+    type: "Деревянный",
+    size: "small",
+    color: "wood",
+    faces: ["кю", "кё", "кя", "ке", "ки", "кь"],
+  },
+
+  {
+    id: "Х",
+    label: "Х",
+    type: "Деревянный",
+    size: "big",
+    color: "wood",
+    faces: ["ХУ", "ХО", "ХА", "ХЭ", "ХЫ", "Х"],
+  },
+
+  {
+    id: "хь",
+    label: "хь",
+    type: "Деревянный",
+    size: "small",
+    color: "wood",
+    faces: ["хю", "хё", "хя", "хе", "хи", "хь"],
+  },
+
+  {
+    id: "Ш",
+    label: "Ш",
+    type: "Деревянный",
+    size: "big-rect",
+    color: "wood",
+    faces: [{ main: "Ш", flip: "ШЬ" }, { main: "ШО", flip: "ШЁ" }, { main: "ШЕ", flip: "" }, { main: "ШИ", flip: "" }, "ШУ", "ША"],
+  },
+
+  {
+    id: "Ц",
+    label: "Ц",
+    type: "Деревянный",
+    size: "big-rect",
+    color: "wood",
+    faces: [{ main: "ЦО", flip: "" }, { main: "ЦА", flip: "" }, { main: "ЦЕ", flip: "" }, { main: "ЦЫ", flip: "ЦИ" }, "Ц", "ЦУ"],
+  },
+
+  {
+    id: "ч",
+    label: "ч",
+    type: "Деревянный",
+    size: "small-rect",
+    color: "wood",
+    faces: [{ main: "ч", flip: "чь" }, { main: "чо", flip: "чё" }, { main: "че", flip: "" }, { main: "чи", flip: "" }, "чу", "ча"],
+  },
+
+  {
+    id: "щ",
+    label: "щ",
+    type: "Деревянный",
+    size: "small-rect",
+    color: "wood",
+    faces: [{ main: "щ", flip: "щь" }, { main: "що", flip: "щё" }, { main: "ще", flip: "" }, { main: "щи", flip: "" }, "щу", "ща"],
+  }
 ];
 
 const COLORS = {
@@ -103,11 +383,11 @@ const FACE_TARGET_ROTATION = {
 // й/ч/щ (soft-only) are rectangular block rather than cubes. Each size here maps to its own width x height x depth in px.
 
 const SIZE_DIMS = {
-  single: { w: 130, h: 130, d: 130 },
-  big: { w: 200, h: 200, d: 200 },
-  small: { w: 140, h: 140, d: 140 },
-  "big-rect": { w: 130, h: 240, d: 130 },
-  "small-rect": { w: 95, h: 170, d: 95 },
+  single: { w: 130, h: 130, d: 130, font: 30 },
+  big: { w: 200, h: 200, d: 200, font: 46 },
+  small: { w: 140, h: 140, d: 140, font: 32 },
+  "big-rect": { w: 130, h: 240, d: 130, font: 30 },
+  "small-rect": { w: 95, h: 170, d: 95, font: 32 },
 };
 
 // Given a face key and box's dimensions, returns the inline geometry
@@ -217,7 +497,7 @@ function openCube(cube, btnEl) {
   const stageSize = Math.max(dims.w, dims.h, dims.d) + 60;
   // Font scales with the smallest face dimension so small/rect cubes
   // don't overflow their own faces.
-  const fontSize = Math.max(16, Math.round(Math.min(dims.w, dims.h) * 0.23));
+  const fontSize = dims.font;
 
   const facesHtml = FACE_KEYS.map((k, i) => {
     const g = faceGeometry(k, dims);
