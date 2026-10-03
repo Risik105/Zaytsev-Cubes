@@ -643,6 +643,70 @@ if (specialPaletteEl) {
   });
 }
 
+// How much of the available slot the text is allowed to fill. 1 = touch
+// the border exactly; slightly under 1 leaves a hair or breathing room
+// so nothing looks clipped by rounding
+const FACE_TEXT_FILL = 0.94;
+
+// Measures the syllable(s) on a face at their natural (unscaled) size,
+// then stretches EACH TEXT SPAN (never the .face itself) with
+// transform: scale(x, y) so it fills its slot as fully as possible -
+// like the real printed cubes, where letters run edge-to-edge. Scaling
+// the .face would corrupt its 3D placement (that's a separate
+// rotateY/translateZ transform) - this only ever touches the span.
+// Emoji glyps render with a lot of invisible padding backed into their
+// own font metrics, so offsetWidth/offsetHeight understate what's
+// actually visible - measuring item like text produces a wildly
+// inflated, lopsided scale (much taller than wide). We still stretch
+// them on the big cube, but cap how far X and Y are allowed to diverge
+// so the berry doesn't warp.
+const EMOJI_RE = /\p{Extended_Pictographic}/u;
+const EMOJI_MAX_AXIS_RATIO = 1.15; // how far scaleY may exceed scaleX (or vice versa)
+
+function fitFaceText(faceEl, cubeSize) {
+  // Count every .face-text slot (including invisible placeholders) -
+  // a hidden placeholder still occupies its share of the flex layout.
+  // so the real text must only be scaled to fit its OWN slot, not the
+  // whole face.
+  const allSlots = Array.from(faceEl.querySelectorAll(".face-text"));
+  if (!allSlots.length) return;
+  const spans = allSlots.filter((s) => !s.classList.contains("face-text-placeholder"));
+  if (!spans.length) return;
+
+  const cs = getComputedStyle(faceEl);
+  const borderW = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+  const borderH = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+  const gap = parseFloat(cs.rowGap || cs.gap) || 0;
+
+  const availW = faceEl.clientWidth - borderW;
+  const availH = (faceEl.clientHeight - borderH - gap * (allSlots.length - 1)) / allSlots.length;
+
+  spans.forEach((span) => {
+    const isFlip = span.classList.contains("face-text-flip");
+    span.style.transform = isFlip ? "rotate(180deg)" : "none"; // reset before measuring
+
+    const isEmoji = EMOJI_RE.test(span.textContent);
+    if (isEmoji && cubeSize !== "big") return; // keep emoji natural-size on small cubes
+
+    const naturalW = span.offsetWidth;
+    const naturalH = span.offsetHeight;
+    if (!naturalW || !naturalH) return;
+    let scaleX = (availW / naturalW) * FACE_TEXT_FILL;
+    let scaleY = (availH / naturalH) * FACE_TEXT_FILL;
+
+    if (isEmoji) {
+      // Clamp the two axes to within EMOJI_MAX_AXIS_RATIO of each other
+      // so the berry grows but doesn't visibly warp.
+      if (scaleY > scaleX * EMOJI_MAX_AXIS_RATIO) scaleY = scaleX * EMOJI_MAX_AXIS_RATIO;
+      else if (scaleX > scaleY * EMOJI_MAX_AXIS_RATIO) scaleX = scaleY * EMOJI_MAX_AXIS_RATIO;
+    }
+
+    span.style.transform = isFlip
+    ? `rotate(180deg) scale(${scaleX}, ${scaleY})`
+    : `scale(${scaleX}, ${scaleY})`;
+  });
+}
+
 function openCube(cube, btnEl) {
   activeCube = cube;
   selectedFace = null;
@@ -694,9 +758,8 @@ function openCube(cube, btnEl) {
     `;
 
   document.getElementById("closeBtn").addEventListener("click", closeCube);
-  document
-    .getElementById("addBtn")
-    .addEventListener("click", addSelectedToWord);
+  document.getElementById("addBtn").addEventListener("click", addSelectedToWord);
+  document.querySelectorAll("#cube3d .face").forEach((faceEl) => fitFaceText(faceEl, cube.size));
   document.querySelectorAll("#cube3d .face-text").forEach((textEl) => {
     if (textEl.classList.contains("face-text-placeholder")) return;
     textEl.addEventListener("click", (e) => {

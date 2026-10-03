@@ -133,7 +133,7 @@ h1 {
 }
 
 .btn-reset {
-  font-family: "Helvetica Neue", Aria, sans-serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 12px;
   color: var(--muted);
   background: none;
@@ -239,7 +239,7 @@ box proportions (w x h x d). Only the shared 3D behavior lives here.
 .face-text {
   cursor: pointer;
   line-height: 1;
-  padding: 2px 6px;
+  padding: 1px 3px;
   border-radius: 3px;
 }
 
