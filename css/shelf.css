@@ -1,0 +1,95 @@
+/* Word shelf */
+.shelf-wrap {
+  background: #fbf7ee;
+  border: 1px solid var(--desk-line);
+  border-radius: 6px;
+  padding: 18px;
+  min-height: 92px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.shelf-wrap.empty {
+  justify-content: center;
+}
+
+.shelf-empty-msg {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.shelf-tile {
+  min-width: 46px;
+  height: 46px;
+  padding: 0 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow:
+    0 3px rgba(0, 0, 0, 0.16),
+    0 4px 6px rgba(0, 0, 0, 0.12);
+    position: relative;
+}
+
+.shelf-tile-text {
+  line-height: 1;
+}
+
+.shelf-tile-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 2px;
+  opacity: 0;
+  font-weight: 700;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  position: absolute;
+  top: -15px;
+  right: -15px;
+}
+
+.shelf-tile:hover .shelf-tile-remove {
+  opacity: 1;
+  background-color: var(--accent);
+  color: var(--desk);
+  border-radius: 50%;
+  padding: 5px 7px;
+}
+
+.shelf-tile:hover {
+  outline: 2px solid var(--accent);
+  z-index: 10;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 46px;
+}
+
+.btn-reset {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 12px;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--desk-line);
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
