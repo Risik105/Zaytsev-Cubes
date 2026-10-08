@@ -23,7 +23,8 @@ export const SPECIAL_SYMBOLS = [
 
   {
     label: " ",
-    title: "Пробел"
+    title: "Пробел",
+    icon: "img/space.svg"
   },
 
   {

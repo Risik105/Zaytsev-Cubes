@@ -27,7 +27,6 @@
 .shelf-tile {
   min-width: 46px;
   height: 46px;
-  padding: 0 10px;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -37,7 +36,7 @@
   box-shadow:
     0 3px rgba(0, 0, 0, 0.16),
     0 4px 6px rgba(0, 0, 0, 0.12);
-    position: relative;
+  position: relative;
 }
 
 .shelf-tile-text {

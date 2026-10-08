@@ -43,33 +43,41 @@
 
 /* sizes reflect the physical cube system */
 .p-item.size-single {
-    width: 44px;
-    height: 44px;
-    font-size: 18px;
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
 }
 
 .p-item.size-big {
-    width: 60px;
-    height: 60px;
-    font-size: 24px;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
 }
 
 .p-item.size-small {
-    width: 38px;
-    height: 38px;
-    font-size: 15px;
+  width: 38px;
+  height: 38px;
+  font-size: 15px;
 }
 
 .p-item.size-big-rect {
-    width: 60px;
-    height: 76px;
-    font-size: 20px;
+  width: 60px;
+  height: 76px;
+  font-size: 20px;
 }
 
 .p-item.size-small-rect {
-    width: 38px;
-    height: 52px;
-    font-size: 13px;
+  width: 38px;
+  height: 52px;
+  font-size: 13px;
+}
+
+.p-item-icon,
+.shelf-tile-icon {
+  width: 44px;
+  height: 44px;
+  pointer-events: none;
+  object-fit: contain;
 }
 
 .palette-row {

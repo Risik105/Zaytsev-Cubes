@@ -20,7 +20,7 @@ function initApp() {
     const specialPaletteEl = document.getElementById("specialPalette");
     if (specialPaletteEl) {
         renderSpecialPalette(SPECIAL_SYMBOLS, specialPaletteEl, (sym) => {
-            addWordTile({ text: sym.label, color: "green" });
+            addWordTile({ text: sym.label, color: "green", icon: sym.icon });
         });
     }
 }
