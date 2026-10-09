@@ -133,7 +133,8 @@ export const SPECIAL_SYMBOLS = [
   },
 
   {
-    label: "`",
-    title: "Ударение"
+    label: " ",
+    title: "Ударение",
+    icon: "img/emphasis.svg"
   },
 ];
