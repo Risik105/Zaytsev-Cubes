@@ -27,6 +27,20 @@ export function renderSpecialPalette(symbols, containerEl, onSymbolClick) {
     btn.style.color = COLORS.green.dark;
     btn.title = sym.title;
 
+    if (sym.label === "Зб" || sym.title === "Заглавная буква") {
+      btn.id = "btnSpecialCapital";
+      btn.dataset.action = "capital";
+    } else if (sym.title === "Ударение") {
+      btn.id = "btnSpecialStress";
+      btn.dataset.action = "stress";
+      btn.draggable = true;
+      btn.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("application/x-cubes-stress", true);
+        e.dataTransfer.setData("text/plain", "STRESS");
+        e.dataTransfer.effectAllowed = "copy";
+      });
+    }
+
     if (sym.icon) {
       const img = document.createElement("img");
       img.src = sym.icon;
@@ -38,7 +52,7 @@ export function renderSpecialPalette(symbols, containerEl, onSymbolClick) {
       btn.textContent = sym.label;
     }
 
-    btn.addEventListener("click", () => onSymbolClick(sym));
+    btn.addEventListener("click", () => onSymbolClick(sym, btn));
     containerEl.appendChild(btn);
   });
 }

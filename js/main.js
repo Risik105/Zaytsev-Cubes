@@ -1,6 +1,6 @@
 import { CUBES } from "./data/cubes.js";
 import { SPECIAL_SYMBOLS } from "./data/special-symbols.js";
-import { initShelf, addWordTile } from "./shelf.js";
+import { initShelf, addWordTile, toggleCapital, toggleStressMode } from "./shelf.js";
 import { renderPalette, renderSpecialPalette } from "./palette.js";
 import { openCube } from "./stage.js";
 
@@ -20,7 +20,13 @@ function initApp() {
     const specialPaletteEl = document.getElementById("specialPalette");
     if (specialPaletteEl) {
         renderSpecialPalette(SPECIAL_SYMBOLS, specialPaletteEl, (sym) => {
-            addWordTile({ text: sym.label, color: "green", icon: sym.icon });
+            if (sym.label === "Зб" || sym.title === "Заглавная буква") {
+                toggleCapital();
+            } else if (sym.title === "Ударение") {
+                toggleStressMode();
+            } else {
+                addWordTile({ text: sym.label, color: "green", icon: sym.icon });
+            }
         });
     }
 }

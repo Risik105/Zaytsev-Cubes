@@ -41,6 +41,26 @@
   outline-offset: 2px;
 }
 
+.p-item.capital-active {
+  outline: 3px solid var(--green-dark) !important;
+  outline-offset: 2px;
+}
+
+.p-item.stress-active {
+  outline: 3px solid var(--green-dark) !important;
+  outline-offset: 2px;
+  animation: stressBtnPulse 1.2s infinite alternate ease-in-out;
+}
+
+@keyframes stressBtnPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(51, 178, 51, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 0 6px rgba(51, 178, 51, 0);
+  }
+}
+
 /* sizes reflect the physical cube system */
 .p-item.size-single {
   width: 44px;
