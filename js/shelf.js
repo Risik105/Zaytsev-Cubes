@@ -147,7 +147,7 @@ export function renderShelf() {
     .map((w, i) => {
       const c = COLORS[w.color];
       const content = w.icon
-      ? `<img src="${w.icon}" class="shelf-tile-icon" alt="${w.text}">`
+      ? `<img src="${w.icon}" class="shelf-tile-icon" draggable="false" alt="${w.text}">`
       : `<span class="shelf-tile-text">${w.text}</span>`;
 
       const isCapitalTile = i === capitalIdx;
@@ -159,14 +159,14 @@ export function renderShelf() {
         ${
           isStressedTile
             ? `<div class="shelf-tile shelf-mark-tile shelf-mark-stress" data-index="${i}" title="Ударение (кликни, чтобы снять)">
-            <img src="img/emphasis.svg" class="shelf-tile-icon" alt="Ударение">
+            <img src="img/emphasis.svg" class="shelf-tile-icon" draggable="false" alt="Ударение">
             <button class="shelf-tile-remove" data-index="${i}" data-remove="stress" title="Удалить">x</button>
             </div>`
             : ""
         }
         ${
           isCapitalTile
-          ? `<div class="shelf-tile shelf-mark-tile shelf-mark-stress" data-index="${i}" title="Заглавная буква (кликни, чтобы снять)">
+          ? `<div class="shelf-tile shelf-mark-tile shelf-mark-capital" title="Заглавная буква (кликни, чтобы снять)">
           <span class="shelf-tile-text">Зб</span>
           <button class="shelf-tile-remove" data-remove="capital" title="Удалить">x</button>
           </div>`
@@ -175,11 +175,11 @@ export function renderShelf() {
         </div>`;
       }
 
-      const tileAttr = isStressMode
+      const titleAttr = isStressMode
       ? ' title="Кликни, чтобы поставить/снять ударение"'
       : ' title="Потяни, чтобы переместить"';
 
-      return `<div class="shelf-column" draggable="true" data-index="${i}"${tileAttr}>
+      return `<div class="shelf-column" draggable="true" data-index="${i}"${titleAttr}>
       ${marksHtml}
       <div class="shelf-tile" style="background:${c.face};color:${c.dark}">
         ${content}
@@ -250,6 +250,37 @@ columns.forEach((colEl) => {
     draggedIndex = idx;
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData("text/plain", String(idx));
+
+    // Create a clean drag ghost image without background artifacts or remove buttons
+    const rect = colEl.getBoundingClientRect();
+    const ghost = colEl.cloneNode(true);
+    ghost.querySelectorAll(".shelf-tile-remove").forEach((btn) => btn.remove());
+    ghost.querySelectorAll(".shelf-tile").forEach((tile) => {
+      tile.style.outline = "none";
+      tile.style.boxShadow = "0 4px 10px rgba(0,0,0,0.24)";
+    });
+    ghost.classList.remove("dragging");
+    ghost.style.position = "fixed";
+    ghost.style.top = "-9999px";
+    ghost.style.left = "-9999px";
+    ghost.style.width = `${rect.width}px`;
+    ghost.style.height = `${rect.height}px`;
+    ghost.style.transform = "none";
+    ghost.style.pointerEvents = "none";
+    ghost.style.background = "transparent";
+    ghost.style.boxShadow = "none";
+    document.body.appendChild(ghost);
+
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+    if (e.dataTransfer.setDragImage) {
+      e.dataTransfer.setDragImage(ghost, offsetX, offsetY);
+    }
+
+    setTimeout(() => {
+      ghost.remove();
+    }, 0);
+
     requestAnimationFrame(() => {
       colEl.classList.add("dragging");
     });
@@ -327,7 +358,7 @@ columns.forEach((colEl) => {
         e.target.closest(".shelf-tile-remove") ||
         e.target.closest(".shelf-mark-tile")
       )
-      return;
+        return;
       touchDraggedIndex = idx;
       touchMoved = false;
       touchCurrentTarget = null;

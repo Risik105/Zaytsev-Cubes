@@ -36,6 +36,7 @@
   position: relative;
   cursor: grab;
   user-select: none;
+  -webkit-user-select: none;
   touch-action: pan-y;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
@@ -55,6 +56,7 @@
   content: "";
   position: absolute;
   left: -6px;
+  top: 0;
   bottom: 0;
   width: 4px;
   background: var(--accent);
@@ -87,6 +89,7 @@
   background: var(--green-face) !important;
   color: var(--green-dark) !important;
   width: 46px !important;
+  min-width: 46px !important;
   height: 46px !important;
   cursor: pointer;
   padding: 0 !important;
@@ -145,48 +148,18 @@
   transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
 }
 
-.shelf-tile:active {
-  cursor: grabbing;
+.shelf-column.dragging .shelf-tile {
+  outline: none !important;
 }
 
-.shelf-tile.dragging {
-  opacity: 0.45;
-  cursor: grabbing;
-  transform: scale(0.95);
-  z-index: 1;
-}
-
-.shelf-tile.dragging .shelf-tile-remove {
-  display: none;
-}
-
-.shelf-tile.drop-before::before {
-  content: "";
-  position: absolute;
-  left: -7px;
-  top: -3px;
-  bottom: -3px;
-  width: 4px;
-  background: var(--accent);
-  border-radius: 2px;
-  box-shadow: 0 0 6px rgba(178, 59, 46, 0.6);
-  pointer-events: none;
-}
-
-.shelf-tile.drop-after::after {
-  content: "";
-  position: absolute;
-  right: -7px;
-  top: -3px;
-  bottom: -3px;
-  width: 4px;
-  background: var(--accent);
-  border-radius: 2px;
-  box-shadow: 0 0 6px rgba(178, 59, 46, 0.6);
+.shelf-column.dragging .shelf-tile-remove {
+  display: none !important;
 }
 
 .shelf-tile-text {
   line-height: 1;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .shelf-tile-remove {
