@@ -8,6 +8,10 @@ let touchDraggedIndex = null;
 let touchMoved = false;
 let touchCurrentTarget = null;
 let touchIsAfter = false;
+let stressDraggedFromIdx = null;
+let touchStressDraggedFromIdx = null;
+let touchStressMoved = false;
+let touchStressTarget = null;
 
 export function getWord() {
   return [...word];
@@ -42,9 +46,6 @@ export function moveWordTile(fromIndex, toIndex) {
   word.splice(toIndex, 0, tile);
   renderShelf();
 }
-
-// Alias for backwards compability
-export const moveWorldTile = moveWordTile;
 
 export function clearWord() {
   word = [];
@@ -158,7 +159,7 @@ export function renderShelf() {
         marksHtml = `<div class="shelf-column-marks">
         ${
           isStressedTile
-            ? `<div class="shelf-tile shelf-mark-tile shelf-mark-stress" data-index="${i}" title="Ударение (кликни, чтобы снять)">
+            ? `<div class="shelf-tile shelf-mark-tile shelf-mark-stress" draggable="true" data-index="${i}" title="Ударение (потяни, чтобы перенести, или кликни, чтобы снять)">
             <img src="img/emphasis.svg" class="shelf-tile-icon" draggable="false" alt="Ударение">
             <button class="shelf-tile-remove" data-index="${i}" data-remove="stress" title="Удалить">x</button>
             </div>`
@@ -213,12 +214,126 @@ wrap.querySelectorAll(".shelf-mark-capital").forEach((el) => {
   });
 });
 
-// Stress mark click (to remove / toggle off)
-wrap.querySelectorAll(".shelf-mark-stress").forEach((el) => {
-  el.addEventListener("click", (e) => {
+// Stress mark click & drag handlers (allows moving stress to another syllable or clicking to remove)
+wrap.querySelectorAll(".shelf-mark-stress").forEach((stressEl) => {
+  const idx = Number(stressEl.dataset.index);
+
+  stressEl.addEventListener("click", (e) => {
+    if (touchStressMoved) return;
     e.stopPropagation();
-    const idx = Number(el.dataset.index);
     toggleTileStress(idx);
+  });
+
+  // Desktop Drag and Drop for stress only
+  stressEl.addEventListener("dragstart", (e) => {
+    if (e.target.closest(".shelf-tile-remove")) {
+      e.preventDefault();
+      return;
+    }
+    e.stopPropagation();
+    stressDraggedFromIdx = idx;
+    draggedIndex = null;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("application/x-cubes-move-stress", String(idx));
+    e.dataTransfer.setData("text/plain", "STRESS_MOVE");
+
+    const rect = stressEl.getBoundingClientRect();
+    const ghost = stressEl.cloneNode(true);
+    ghost.querySelectorAll(".shelf-tile-remove").forEach((btn) => btn.remove());
+    ghost.style.outline = "none";
+    ghost.style.boxShadow = "0 4px 10px rgba(0,0,0,0.24)";
+    ghost.style.position = "fixed";
+    ghost.style.top = "-9999px";
+    ghost.style.left = "-9999px";
+    ghost.style.width = `${rect.width}px`;
+    ghost.style.height = `${rect.height}px`;
+    ghost.style.transform = "none";
+    ghost.style.pointerEvents = "none";
+    ghost.style.background = "transparent";
+    document.body.appendChild(ghost);
+
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+    if (e.dataTransfer.setDragImage) {
+      e.dataTransfer.setDragImage(ghost, offsetX, offsetY);
+    }
+
+    setTimeout(() => {
+      ghost.remove();
+    }, 0);
+
+    requestAnimationFrame(() => {
+      stressEl.classList.add("dragging");
+    });
+  });
+
+  stressEl.addEventListener("dragged", () => {
+    stressEl.classList.remove("dragging");
+    stressDraggedFromIdx = null;
+    clearDropIndicators(wrap);
+  });
+
+  // Touch Drag and Drop for stress only
+  stressEl.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.target.closest(".shelf-tile-remove")) return;
+      touchStressDraggedFromIdx = idx;
+      touchStressMoved = false;
+      touchStressTarget = null;
+    },
+    { passive: true }
+  );
+
+  stressEl.addEventListener(
+    "touchmove",
+    (e) => {
+      if (touchStressDraggedFromIdx === null) return;
+      touchStressMoved = true;
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+
+      stressEl.classList.add("dragging");
+      const touch = e.touches[0];
+      const element = document.elementFromPoint(touch.clientX, touch.clientY);
+      const targetCol = element ? element.closest(".shelf-column") : null;
+
+      clearDropIndicators(wrap);
+      if (targetCol) {
+        targetCol.classList.add("stress-drop-hover");
+        touchStressTarget = targetCol;
+      } else {
+        touchStressTarget = null;
+      }
+    },
+    { passive: true }
+  );
+
+  stressEl.addEventListener("touchend", () => {
+    if (touchStressDraggedFromIdx === null) return;
+    const fromIdx = touchStressDraggedFromIdx;
+    stressEl.classList.remove("dragging");
+    touchStressDraggedFromIdx = null;
+    clearDropIndicators(wrap);
+
+    if (touchStressMoved && touchStressTarget) {
+      const targetIdx = Number(touchStressTarget.dataset.index);
+      touchStressTarget = null;
+      if (targetIdx !== fromIdx) {
+        word[fromIdx].hasStress = false;
+        word[targetIdx].hasStress = true;
+        renderShelf();
+      }
+    }
+  });
+
+  stressEl.addEventListener("touchcancel", () => {
+    stressEl.classList.remove("dragging");
+    touchStressDraggedFromIdx = null;
+    touchStressMoved = false;
+    touchStressTarget = null;
+    clearDropIndicators(wrap);
   });
 });
 
@@ -243,8 +358,11 @@ columns.forEach((colEl) => {
   });
 
   colEl.addEventListener("dragstart", (e) => {
-    if (e.target.closest(".shelf-tile-remove")) {
-      e.preventDefault();
+    if (
+      e.target.closest(".shelf-tile-remove") ||
+      e.target.closest(".shelf-mark-stress") ||
+      stressDraggedFromIdx !== null
+    ) {
       return;
     }
     draggedIndex = idx;
@@ -293,10 +411,15 @@ columns.forEach((colEl) => {
   });
 
   colEl.addEventListener("dragover", (e) => {
-    // Check if dragging stress symbol from palette
-    if (e.dataTransfer.types.includes("application/x-cubes-stress")) {
+    // Check if dragging stress symbol (from palette or from another syllable)
+    if (
+      e.dataTransfer.types.includes("application/x-cubes-move-stress") ||
+      e.dataTransfer.types.includes("application/x-cubes-stress") ||
+      stressDraggedFromIdx !== null
+    ) {
       e.preventDefault();
-      e.dataTransfer.dropEffect = "copy";
+      e.dataTransfer.dropEffect = "move";
+      clearDropIndicators(wrap);
       colEl.classList.add("stress-drop-hover");
       return;
     }
@@ -322,6 +445,24 @@ columns.forEach((colEl) => {
 
   colEl.addEventListener("drop", (e) => {
     colEl.classList.remove("stress-drop-hover");
+
+    // Handle moving stress from another syllable
+    const moveStressFrom = 
+    e.dataTransfer.getData("application/x-cubes-move-stress") ||
+    (stressDraggedFromIdx !== null ? String(stressDraggedFromIdx) : null);
+    if (moveStressFrom !== null && moveStressFrom !== "") {
+      e.preventDefault();
+      e.stopPropagation();
+      const fromIdx = Number(moveStressFrom);
+      stressDraggedFromIdx = null;
+      clearDropIndicators(wrap);
+      if (fromIdx !== idx) {
+        word[fromIdx].hasStress = false;
+        word[idx].hasStress = true;
+        renderShelf();
+      }
+      return;
+    }
 
     // Handle dropping stress symbol from palette
     if (e.dataTransfer.getData("application/x-cubes-stress") === "true") {
@@ -350,13 +491,14 @@ columns.forEach((colEl) => {
     moveWordTile(fromIdx, insertIdx);
   });
 
-  // Touch events for mobile/tablet drag-and-drop
+  // Touch events for mobile/tablet drag-and-drop or entire column
   colEl.addEventListener(
     "touchstart",
     (e) => {
       if (
         e.target.closest(".shelf-tile-remove") ||
-        e.target.closest(".shelf-mark-tile")
+        e.target.closest(".shelf-mark-stress") ||
+        touchStressDraggedFromIdx !== null
       )
         return;
       touchDraggedIndex = idx;
@@ -413,7 +555,7 @@ columns.forEach((colEl) => {
       : adjustedTargetIdx;
       touchCurrentTarget = null;
       clearDropIndicators(wrap);
-      moveWorldTile(fromIdx, insertIdx);
+      moveWordTile(fromIdx, insertIdx);
     } else {
       clearDropIndicators(wrap);
     }
@@ -455,7 +597,7 @@ wrap.ondrop = (e) => {
     const fromIdx = draggedIndex;
     draggedIndex = null;
     clearDropIndicators(wrap);
-    moveWorldTile(fromIdx, insertIdx);
+    moveWordTile(fromIdx, insertIdx);
   }
 };
 
