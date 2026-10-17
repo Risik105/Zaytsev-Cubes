@@ -13,7 +13,6 @@
 }
 
 .stage-placeholder {
-  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 14px;
   color: var(--muted);
 }
@@ -23,7 +22,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 12px;
   color: var(--muted);
   margin-bottom: 14px;
@@ -111,7 +109,6 @@ box proportions (w x h x d). Only the shared 3D behavior lives here.
   display: flex;
   align-items: center;
   gap: 14px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 .selected-hint {
@@ -127,7 +124,6 @@ box proportions (w x h x d). Only the shared 3D behavior lives here.
 }
 
 .btn-add {
-  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 14px;
   font-weight: 600;
   color: #fff;

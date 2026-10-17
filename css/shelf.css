@@ -1,5 +1,21 @@
+/* Shelf section & full-width container */
+.shelf-area {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 24px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .shelf-area {
+    padding: 0 12px;
+  }
+}
+
 /* Word shelf */
 .shelf-wrap {
+  width: 100%;
+  box-sizing: border-box;
   background: #fbf7ee;
   border: 1px solid var(--desk-line);
   border-radius: 6px;
@@ -11,16 +27,16 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   margin-bottom: 10px;
-  transition: outline 0.2s ease;
+  transition: outline 0.2s ease, min-height 0.2s ease;
 }
 
 .shelf-wrap.empty {
   justify-content: center;
   align-items: center;
+  min-height: 92px;
 }
 
 .shelf-empty-msg {
-  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 13px;
   color: var(--muted);
   font-style: italic;
@@ -185,7 +201,6 @@
   padding: 2px;
   opacity: 0;
   font-weight: 700;
-  font-family: "Helvetica Neue", Arial, sans-serif;
   position: absolute;
   top: -15px;
   right: -15px;
@@ -211,7 +226,6 @@
 }
 
 .btn-reset {
-  font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 12px;
   color: var(--muted);
   background: none;

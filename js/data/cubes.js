@@ -12,21 +12,21 @@ export const CUBES = [
   },
 
   {
-    id: "ю",
-    label: "ю",
+    id: "Ю",
+    label: "Ю",
     type: "Гласный",
     size: "small",
     color: "gold",
-    faces: ["ю", "ё", "я", "е", "и", "🍓"],
+    faces: ["Ю", "Ё", "Я", "Е", "И", "🍓"],
   },
 
   {
-    id: "й",
-    label: "й",
+    id: "Й",
+    label: "Й",
     type: "Звонкий мягкий согласный",
     size: "small-rect",
     color: "grey",
-    faces: [{ main: "й", flip: "" }, { main: "йя", flip: "йа" }, { main: "", flip: "йо" }, { main: "йи", flip: "" }, "йю", "йе"],
+    faces: [{ main: "Й", flip: "" }, { main: "ЙЯ", flip: "ЙА" }, { main: "", flip: "ЙО" }, { main: "ЙИ", flip: "" }, "ЙЮ", "ЙЕ"],
   },
 
   {
@@ -39,12 +39,12 @@ export const CUBES = [
   },
 
   {
-    id: "ль",
-    label: "ль",
+    id: "ЛЬ",
+    label: "ЛЬ",
     type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
-    faces: ["лю", "лё", "ля", "ле", "ли", "ль"],
+    faces: ["ЛЮ", "ЛЁ", "ЛЯ", "ЛЕ", "ЛИ", "ЛЬ"],
   },
 
   {
@@ -57,12 +57,12 @@ export const CUBES = [
   },
 
   {
-    id: "мь",
-    label: "мь",
+    id: "МЬ",
+    label: "МЬ",
     type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
-    faces: ["мю", "мё", "мя", "ме", "ми", "мь"],
+    faces: ["МЮ", "МЁ", "МЯ", "МЕ", "МИ", "МЬ"],
   },
 
   {
@@ -75,12 +75,12 @@ export const CUBES = [
   },
 
   {
-    id: "нь",
-    label: "нь",
+    id: "НЬ",
+    label: "НЬ",
     type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
-    faces: ["ню", "нё", "ня", "не", "ни", "нь"],
+    faces: ["НЮ", "НЁ", "НЯ", "НЕ", "НИ", "НЬ"],
   },
 
   {
@@ -93,12 +93,12 @@ export const CUBES = [
   },
 
   {
-    id: "рь",
-    label: "рь",
+    id: "РЬ",
+    label: "РЬ",
     type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
-    faces: ["рю", "рё", "ря", "ре", "ри", "рь"],
+    faces: ["РЮ", "РЁ", "РЯ", "РЕ", "РИ", "РЬ"],
   },
 
   {
@@ -111,12 +111,12 @@ export const CUBES = [
   },
 
   {
-    id: "вь",
-    label: "вь",
+    id: "ВЬ",
+    label: "ВЬ",
     type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
-    faces: ["вю", "вё", "вя", "ве", "ви", "вь"],
+    faces: ["ВЮ", "ВЁ", "ВЯ", "ВЕ", "ВИ", "ВЬ"],
   },
 
   {
@@ -129,12 +129,12 @@ export const CUBES = [
   },
 
   {
-    id: "зь",
-    label: "зь",
+    id: "ЗЬ",
+    label: "ЗЬ",
     type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
-    faces: ["зю", "зё", "зя", "зе", "зи", "зь"],
+    faces: ["ЗЮ", "ЗЁ", "ЗЯ", "ЗЕ", "ЗИ", "ЗЬ"],
   },
 
   {
@@ -147,12 +147,12 @@ export const CUBES = [
   },
 
   {
-    id: "бь",
-    label: "бь",
+    id: "БЬ",
+    label: "БЬ",
     type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
-    faces: ["бю", "бё", "бя", "бе", "би", "бь"],
+    faces: ["БЮ", "БЁ", "БЯ", "БЕ", "БИ", "БЬ"],
   },
 
   {
@@ -165,12 +165,12 @@ export const CUBES = [
   },
 
   {
-    id: "дь",
-    label: "дь",
+    id: "ДЬ",
+    label: "ДЬ",
     type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
-    faces: ["дю", "дё", "дя", "де", "ди", "дь"],
+    faces: ["ДЮ", "ДЁ", "ДЯ", "ДЕ", "ДИ", "ДЬ"],
   },
 
   {
@@ -183,12 +183,12 @@ export const CUBES = [
   },
 
   {
-    id: "гь",
-    label: "гь",
+    id: "ГЬ",
+    label: "ГЬ",
     type: "Звонкий мягкий согласный",
     size: "small",
     color: "grey",
-    faces: ["гю", "гё", "гя", "ге", "ги", "гь"],
+    faces: ["ГЮ", "ГЁ", "ГЯ", "ГЕ", "ГИ", "ГЬ"],
   },
 
   {
@@ -210,12 +210,12 @@ export const CUBES = [
   },
 
   {
-    id: "фь",
-    label: "фь",
+    id: "ФЬ",
+    label: "ФЬ",
     type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
-    faces: ["фю", "фё", "фя", "фе", "фи", "фь"],
+    faces: ["ФЮ", "ФЁ", "ФЯ", "ФЕ", "ФИ", "ФЬ"],
   },
 
   {
@@ -228,12 +228,12 @@ export const CUBES = [
   },
 
   {
-    id: "сь",
-    label: "сь",
+    id: "СЬ",
+    label: "СЬ",
     type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
-    faces: ["сю", "сё", "ся", "се", "си", "сь"],
+    faces: ["СЮ", "СЁ", "СЯ", "СЕ", "СИ", "СЬ"],
   },
 
   {
@@ -246,12 +246,12 @@ export const CUBES = [
   },
 
   {
-    id: "пь",
-    label: "пь",
+    id: "ПЬ",
+    label: "ПЬ",
     type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
-    faces: ["пю", "пё", "пя", "пе", "пи", "пь"],
+    faces: ["ПЮ", "ПЁ", "ПЯ", "ПЕ", "ПИ", "ПЬ"],
   },
 
   {
@@ -264,12 +264,12 @@ export const CUBES = [
   },
 
   {
-    id: "ть",
-    label: "ть",
+    id: "ТЬ",
+    label: "ТЬ",
     type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
-    faces: ["тю", "тё", "тя", "те", "ти", "ть"],
+    faces: ["ТЮ", "ТЁ", "ТЯ", "ТЕ", "ТИ", "ТЬ"],
   },
 
   {
@@ -282,12 +282,12 @@ export const CUBES = [
   },
 
   {
-    id: "кь",
-    label: "кь",
+    id: "КЬ",
+    label: "КЬ",
     type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
-    faces: ["кю", "кё", "кя", "ке", "ки", "кь"],
+    faces: ["КЮ", "КЁ", "КЯ", "КЕ", "КИ", "КЬ"],
   },
 
   {
@@ -300,12 +300,12 @@ export const CUBES = [
   },
 
   {
-    id: "хь",
-    label: "хь",
+    id: "ХЬ",
+    label: "ХЬ",
     type: "Глухой мягкий согласный",
     size: "small",
     color: "wood",
-    faces: ["хю", "хё", "хя", "хе", "хи", "хь"],
+    faces: ["ХЮ", "ХЁ", "ХЯ", "ХЕ", "ХИ", "ХЬ"],
   },
 
   {
@@ -327,20 +327,20 @@ export const CUBES = [
   },
 
   {
-    id: "ч",
-    label: "ч",
+    id: "Ч",
+    label: "Ч",
     type: "Глухой мягкий согласный",
     size: "small-rect",
     color: "wood",
-    faces: [{ main: "ч", flip: "чь" }, { main: "чо", flip: "чё" }, { main: "че", flip: "" }, { main: "чи", flip: "" }, "чу", "ча"],
+    faces: [{ main: "Ч", flip: "ЧЬ" }, { main: "ЧО", flip: "ЧЁ" }, { main: "ЧЕ", flip: "" }, { main: "ЧИ", flip: "" }, "ЧУ", "ЧА"],
   },
 
   {
-    id: "щ",
-    label: "щ",
+    id: "Щ",
+    label: "Щ",
     type: "Глухой мягкий согласный",
     size: "small-rect",
     color: "wood",
-    faces: [{ main: "щ", flip: "щь" }, { main: "що", flip: "щё" }, { main: "ще", flip: "" }, { main: "щи", flip: "" }, "щу", "ща"],
+    faces: [{ main: "Щ", flip: "ЩЬ" }, { main: "ЩО", flip: "ЩЁ" }, { main: "ЩЕ", flip: "" }, { main: "ЩИ", flip: "" }, "ЩУ", "ЩА"],
   }
 ];
