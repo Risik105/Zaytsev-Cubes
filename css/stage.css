@@ -1,6 +1,6 @@
 /* Cube stage */
 .stage-panel {
-  background: #fbf7ee;
+  background: var(--color-light);
   border: 1px solid var(--desk-line);
   border-radius: 8px;
   padding: 30px 20px;

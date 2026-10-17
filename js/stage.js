@@ -4,6 +4,7 @@ import { addWordTile } from "./shelf.js";
 
 let activeCube = null;
 let selectedFace = null;
+let selectedFaceData = null;
 let activeCubeControls = null; // set by setupDrag(); exposes snapToFace()
 
 export function getActiveCube() {
@@ -17,6 +18,7 @@ export function getSelectedFace() {
 export function openCube(cube, btnEl) {
   activeCube = cube;
   selectedFace = null;
+  selectedFaceData = null;
 
   document
     .querySelectorAll(".p-item.active")
@@ -84,6 +86,7 @@ if (!stagePanel) return;
 export function closeCube() {
   activeCube = null;
   selectedFace = null;
+  selectedFaceData = null;
   document
     .querySelectorAll(".p-item.active")
     .forEach((el) => el.classList.remove("active"));
@@ -100,6 +103,29 @@ export function selectFace(textEl) {
     .forEach((f) => f.classList.remove("selected"));
   textEl.classList.add("selected");
   selectedFace = textEl.dataset.text;
+
+  // Determine secondary syllable on this face if it is a dual-syllable rectangular face
+  const faceEl = textEl.closest(".face");
+  const faceKey = FACE_KEYS.find((k) => faceEl && faceEl.classList.contains(`f-${k}`));
+  const isFlip = textEl.classList.contains("face-text-flip");
+
+  let secondaryText = null;
+  if (activeCube && faceKey) {
+    const faceIndex = FACE_KEYS.indexOf(faceKey);
+    const faceEntry = activeCube.faces[faceIndex];
+    if (faceEntry && typeof faceEntry === "object") {
+      const partner = isFlip ? faceEntry.main : faceEntry.flip;
+      secondaryText = (partner !== undefined && partner !== null) ? partner : "";
+    }
+  }
+
+  // Store detailed selection data
+  selectedFaceData = {
+    primaryText: selectFace,
+    secondaryText: secondaryText,
+    isFlipped: isFlip,
+  };
+
   const selHint = document.getElementById("selHint");
   if (selHint) {
     selHint.innerHTML = `Выбран: <b>${selectedFace}</b>`;
@@ -112,9 +138,6 @@ export function selectFace(textEl) {
   // Turn the cube so the clicked face points straight at the viewer.
   // If the clicked syllable was the upside-down "flip" one, roll an
   // extra 180deg so it reads right-side up instead of the main syllable.
-  const faceEl = textEl.closest(".face");
-  const faceKey = FACE_KEYS.find((k) => faceEl.classList.contains(`f-${k}`));
-  const isFlip = textEl.classList.contains("face-text-flip");
   if (activeCubeControls && faceKey) {
     activeCubeControls.snapToFace(faceKey, isFlip);
   }
@@ -122,7 +145,13 @@ export function selectFace(textEl) {
 
 function addSelectedToWord() {
   if (!selectedFace || !activeCube) return;
-  addWordTile({ text: selectedFace, color: activeCube.color });
+  addWordTile({
+    text: selectedFace,
+    secondaryText: selectedFaceData ? selectedFaceData.secondaryText : null,
+    isFlipped: selectedFaceData ? selectedFaceData.isFlipped : false,
+    color: activeCube.color,
+    size: activeCube.size,
+  });
 }
 
 function setupDrag() {

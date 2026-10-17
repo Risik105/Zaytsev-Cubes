@@ -116,7 +116,7 @@
 
 .special-panel {
   flex: 0 0 180px;
-  background: #fbf7ee;
+  background-color: var(--color-light);
   border: 1px solid var(--desk-line);
   border-radius: 8px;
   padding: 16px 14px;

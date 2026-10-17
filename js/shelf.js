@@ -147,9 +147,19 @@ export function renderShelf() {
   wrap.innerHTML = word
     .map((w, i) => {
       const c = COLORS[w.color];
-      const content = w.icon
-      ? `<img src="${w.icon}" class="shelf-tile-icon" draggable="false" alt="${w.text}">`
-      : `<span class="shelf-tile-text">${w.text}</span>`;
+      const sizeClass = w.size ? ` size-${w.size}` : " size-big";
+      const isRect = w.size === "big-rect" || w.size === "small-rect";
+      let content = "";
+      if (w.icon) {
+        content = `<img src="${w.icon}" class="shelf-tile-icon" draggable="false" alt="${w.text}">`;
+      } else if (isRect || (w.secondaryText !== undefined && w.secondaryText !== null)) {
+        content = `<div class="shelf-tile-rect-content">
+          <span class="shelf-tile-secondary">${w.secondaryText ? w.secondaryText : "&nbsp"}</span>
+          <span class="shelf-tile-primary">${w.text}</span>
+        </div>`;
+      } else {
+        content = `<span class="shelf-tile-text">${w.text}</span>`;
+      }
 
       const isCapitalTile = i === capitalIdx;
       const isStressedTile = Boolean(w.hasStress);
@@ -182,7 +192,7 @@ export function renderShelf() {
 
       return `<div class="shelf-column" draggable="true" data-index="${i}"${titleAttr}>
       ${marksHtml}
-      <div class="shelf-tile" style="background:${c.face};color:${c.dark}">
+      <div class="shelf-tile${sizeClass}" style="background:${c.face};color:${c.dark}">
         ${content}
         <button class="shelf-tile-remove" data-index="${i}" data-remove="tile" title="Удалить">x</button>
       </div>

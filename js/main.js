@@ -25,7 +25,7 @@ function initApp() {
             } else if (sym.title === "Ударение") {
                 toggleStressMode();
             } else {
-                addWordTile({ text: sym.label, color: "green", icon: sym.icon });
+                addWordTile({ text: sym.label, color: "green", icon: sym.icon, size: "single" });
             }
         });
     }
