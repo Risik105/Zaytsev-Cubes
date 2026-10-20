@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Кубики Зайцева в 3D</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="wrap header-wrap">
+      <h1>Кубики Зайцева в 3D</h1>
+      <p class="sub">
+        Выбери кубик внизу → покрути → кликни грань → добавь к слову
+      </p>
+    </header>
+
+    <div class="shelf-area">
+      <div class="shelf-wrap empty" id="shelfWrap">
+        <span class="shelf-empty-msg" id="shelfEmptyMsg"
+          >Тут пока что ничего нет. Начни снизу</span
+        >
+      </div>
+
+      <div class="toolbar">
+        <button class="btn-reset" id="resetBtn">Сбросить</button>
+      </div>
+    </div>
+
+    <main class="wrap content-wrap">
+      <div class="stage-panel" id="stagePanel">
+        <div class="stage-placeholder" id="placeholder">
+          Тут появится кубик, когда ты выберешь его внизу ↓
+        </div>
+      </div>
+
+      <div class="palette-row">
+        <div class="palette" id="palette"></div>
+        <aside class="special-panel">
+          <p class="shelf-label">Спецсимволы</p>
+          <div class="palette special-palette" id="specialPalette"></div>
+        </aside>
+      </div>
+
+      <div class="legend">
+        <span>
+          <span class="swatch" style="background: var(--gold-face)"></span>
+          гласные
+        </span>
+        <span>
+          <span class="swatch" style="background: var(--grey-face)"></span>
+          твердые согласные
+        </span>
+        <span>
+          <span class="swatch" style="background: var(--wood-face)"></span>
+          мягкие гласные
+        </span>
+        <span>
+          <span class="swatch" style="background: var(--green-face)"></span>
+          специальные символы
+        </span>
+      </div>
+
+      <footer>Ты можешь писать слова (в дальнейшем - предложения).</footer>
+    </main>
+  </body>
+  <script type="module" src="js/main.js"></script>
+</html>

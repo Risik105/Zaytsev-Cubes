@@ -1,0 +1,22 @@
+:root {
+  --desk: #e4dccb;
+  --desk-line: #d3c8ae;
+  --ink: #2b241a;
+  --muted: #7a6f5c;
+  --color-light: #fbf7ee;
+
+  /* Cube Colors */
+  --gold-face: #f2c744;
+  --gold-dark: #ff0000;
+  --grey-face: #c7c7c7;
+  --grey-dark: #1c1c1c;
+  --wood-face: #e7b96a;
+  --wood-dark: #643e07;
+  --green-face: #eaf4e2;
+  --green-dark: #33b233;
+
+  /* UI Accents & Buttons */
+  --accent: #b23b2e;
+  --accent-hover: #952f24;
+  --disabled: #c9bfae;
+}
