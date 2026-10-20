@@ -135,12 +135,12 @@ box proportions (w x h x d). Only the shared 3D behavior lives here.
 }
 
 .btn-add:disabled {
-  background: #c9bfae;
+  background: var(--disabled);
   cursor: not-allowed;
 }
 
 .btn-add:not(:disabled):hover {
-  background: #952f24;
+  background: var(--accent-hover);
 }
 
 .drag-hint {

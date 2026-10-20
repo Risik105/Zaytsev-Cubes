@@ -153,25 +153,25 @@
 .p-item.size-big {
   width: 60px;
   height: 60px;
-  font-size: 24px;
+  font-size: 30px;
 }
 
 .p-item.size-small {
   width: 38px;
   height: 38px;
-  font-size: 15px;
+  font-size: 25px;
 }
 
 .p-item.size-big-rect {
   width: 60px;
   height: 76px;
-  font-size: 20px;
+  font-size: 32px;
 }
 
 .p-item.size-small-rect {
   width: 38px;
   height: 52px;
-  font-size: 13px;
+  font-size: 25px;
 }
 
 .p-item-icon,
