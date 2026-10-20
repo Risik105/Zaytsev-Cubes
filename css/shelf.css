@@ -231,13 +231,11 @@
   line-height: 1;
   font-weight: 700;
   width: 100%;
-  
 }
 
 .shelf-tile-primary {
   line-height: 1;
   font-weight: 700;
-  
 }
 
 .shelf-column.dragging .shelf-tile {
@@ -252,7 +250,6 @@
   line-height: 1;
   user-select: none;
   -webkit-user-select: none;
-  
 }
 
 .shelf-tile-remove {
