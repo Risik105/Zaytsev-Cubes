@@ -1,7 +1,7 @@
 import { COLORS } from "./constants.js";
 
 let word = [];
-let hasCapital = false;
+let isCapitalMode = false;
 let isStressMode = false;
 let draggedIndex = null;
 let touchDraggedIndex = null;
@@ -12,6 +12,10 @@ let stressDraggedFromIdx = null;
 let touchStressDraggedFromIdx = null;
 let touchStressMoved = false;
 let touchStressTarget = null;
+let capitalDraggedFromIdx = null;
+let touchCapitalDraggedFromIdx = null;
+let touchCapitalMoved = false;
+let touchCapitalTarget = null;
 
 export function getWord() {
   return [...word];
@@ -25,7 +29,7 @@ export function addWordTile(tile) {
 export function removeWordTile(index) {
   word.splice(index, 1);
   if (word.length === 0) {
-    hasCapital = false;
+    isCapitalMode = false;
     isStressMode = false;
     updateSpecialButtonsState();
   }
@@ -49,36 +53,48 @@ export function moveWordTile(fromIndex, toIndex) {
 
 export function clearWord() {
   word = [];
-  hasCapital = false;
+  isCapitalMode = false;
   isStressMode = false;
   updateSpecialButtonsState();
   renderShelf();
 }
 
 export function toggleCapital() {
-  hasCapital = !hasCapital;
+  isCapitalMode = !isCapitalMode;
+  if (isCapitalMode) {
+    isStressMode = false;
+  }
   updateSpecialButtonsState();
   renderShelf();
 }
 
 export function setCapital(val) {
-  hasCapital = Boolean(val);
+  isCapitalMode = Boolean(val);
+  if (isCapitalMode) {
+    isStressMode = false;
+  }
   updateSpecialButtonsState();
   renderShelf();
 }
 
 export function getCapital() {
-  return hasCapital;
+  return isCapitalMode;
 }
 
 export function toggleStressMode() {
   isStressMode = !isStressMode;
+  if (isStressMode) {
+    isCapitalMode = false;
+  }
   updateSpecialButtonsState();
   renderShelf();
 }
 
 export function setStressMode(val) {
   isStressMode = Boolean(val);
+  if (isStressMode) {
+    isCapitalMode = false;
+  }
   updateSpecialButtonsState();
   renderShelf();
 }
@@ -93,11 +109,21 @@ export function toggleTileStress(index, forceVal) {
   renderShelf();
 }
 
+export function toggleTileCapital(index, forceVal) {
+  if (index < 0 || index >= word.length) return;
+  if (typeof forceVal === "boolean") {
+    word[index].hasCapital = forceVal;
+  } else {
+    word[index].hasCapital = !word[index].hasCapital;
+  }
+  renderShelf();
+}
+
 export function updateSpecialButtonsState() {
   const capBtn = document.getElementById("btnSpecialCapital");
   if (capBtn) {
-    capBtn.classList.toggle("capital-active", hasCapital);
-    capBtn.classList.toggle("active", hasCapital);
+    capBtn.classList.toggle("capital-active", isCapitalMode);
+    capBtn.classList.toggle("active", isCapitalMode);
   }
   const stressBtn = document.getElementById("btnSpecialStress");
   if (stressBtn) {
@@ -106,22 +132,15 @@ export function updateSpecialButtonsState() {
   }
 }
 
-export function getFirstLetterTileIndex() {
-  if (word.length === 0) return -1;
-  const idx = word.findIndex(
-    (tile) =>
-      tile.text !== "Кс" &&
-    tile.text !== " " &&
-    tile.text !== "—" &&
-    tile.text !== "-"
-  );
-  return idx !== -1 ? idx : 0;
-}
-
 function clearDropIndicators(wrap) {
   if (!wrap) return;
   wrap.querySelectorAll(".shelf-column").forEach((col) => {
-    col.classList.remove("drop-before", "drop-after", "stress-drop-hover");
+    col.classList.remove(
+      "drop-before",
+      "drop-after",
+      "stress-drop-hover",
+      "capital-drop-hover"
+    );
   });
 }
 
@@ -133,7 +152,7 @@ export function renderShelf() {
 
   if (word.length === 0) {
     wrap.classList.add("empty");
-    wrap.classList.remove("stress-mode");
+    wrap.classList.remove("stress-mode", "capital-mode");
     wrap.innerHTML =
       '<span class="shelf-empty-msg" id="shelfEmptyMsg">Тут пока что ничего нет. Начни снизу</span>';
     return;
@@ -141,8 +160,7 @@ export function renderShelf() {
 
   wrap.classList.remove("empty");
   wrap.classList.toggle("stress-mode", isStressMode);
-
-  const capitalIdx = hasCapital ? getFirstLetterTileIndex() : -1;
+  wrap.classList.toggle("capital-mode", isCapitalMode);
 
   wrap.innerHTML = word
     .map((w, i) => {
@@ -161,7 +179,7 @@ export function renderShelf() {
         content = `<span class="shelf-tile-text">${w.text}</span>`;
       }
 
-      const isCapitalTile = i === capitalIdx;
+      const isCapitalTile = Boolean(w.hasCapital);
       const isStressedTile = Boolean(w.hasStress);
 
       let marksHtml = "";
@@ -177,18 +195,21 @@ export function renderShelf() {
         }
         ${
           isCapitalTile
-          ? `<div class="shelf-tile shelf-mark-tile shelf-mark-capital" title="Заглавная буква (кликни, чтобы снять)">
+          ? `<div class="shelf-tile shelf-mark-tile shelf-mark-capital" draggable="true" data-index="${i}" title="Заглавная буква (потяни, чтобы перенести, или кликни, чтобы снять)">
           <span class="shelf-tile-text">Зб</span>
-          <button class="shelf-tile-remove" data-remove="capital" title="Удалить">x</button>
+          <button class="shelf-tile-remove" data-index="${i}" data-remove="capital" title="Удалить">x</button>
           </div>`
           : ""
         }
         </div>`;
       }
 
-      const titleAttr = isStressMode
-      ? ' title="Кликни, чтобы поставить/снять ударение"'
-      : ' title="Потяни, чтобы переместить"';
+      let titleAttr = ' title="Потяни, чтобы переместить"';
+      if (isStressMode) {
+        titleAttr = ' title="Кликни, чтобы поставить/снять удаление"';
+      } else if (isCapitalMode) {
+        titleAttr = ' title="Кликни, чтобы поставить/снять заглавную букву"';
+      }
 
       return `<div class="shelf-column" draggable="true" data-index="${i}"${titleAttr}>
       ${marksHtml}
@@ -200,27 +221,142 @@ export function renderShelf() {
     })
     .join("");
 
-    // Remove buttons
+  // Remove buttons
   wrap.querySelectorAll(".shelf-tile-remove").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       const removeType = btn.dataset.remove;
       const idx = Number(btn.dataset.index);
       if (removeType === "capital") {
-        toggleCapital();
+        toggleTileCapital(idx, false);
       } else if (removeType === "stress") {
         toggleTileStress(idx, false);
       } else {
         removeWordTile(idx);
       }
     });
-});
+  });
 
-// Capital letter badge click (to remove / toggle off)
-wrap.querySelectorAll(".shelf-mark-capital").forEach((el) => {
-  el.addEventListener("click", (e) => {
+// Capital mark click & drag handlers (allows moving capital to another syllable or clicking to remove)
+wrap.querySelectorAll(".shelf-mark-capital").forEach((capitalEl) => {
+  const idx = Number(capitalEl.dataset.index);
+
+  capitalEl.addEventListener("click", (e) => {
+    if (touchCapitalMoved) return;
     e.stopPropagation();
-    toggleCapital();
+    toggleTileCapital(idx, false);
+  });
+
+  // Desktop Drag and Drop for capital only
+  capitalEl.addEventListener("dragstart", (e) => {
+    if (e.target.closest(".shelf-tile-remove")) {
+      e.preventDefault();
+      return;
+    }
+    e.stopPropagation();
+    capitalDraggedFromIdx = idx;
+    draggedIndex = null;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("application/x-cubes-move-capital", String(idx));
+    e.dataTransfer.setData("text/plain", "CAPITAL_MOVE");
+
+    const rect = capitalEl.getBoundingClientRect();
+    const ghost = capitalEl.cloneNode(true);
+    ghost.querySelectorAll(".shelf-tile-remove").forEach((btn) => btn.remove());
+    ghost.style.outline = "none";
+    ghost.style.boxShadow = "0 4px 10px rgba(0,0,0,0.24)";
+    ghost.style.position = "fixed";
+    ghost.style.top = "-9999px";
+    ghost.style.left = "-9999px";
+    ghost.style.width = `${rect.width}px`;
+    ghost.style.height = `${rect.height}px`;
+    ghost.style.transform = "none";
+    ghost.style.pointerEvents = "none";
+    ghost.style.background = "transparent";
+    document.body.appendChild(ghost);
+
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+    if (e.dataTransfer.setDragImage) {
+      e.dataTransfer.setDragImage(ghost, offsetX, offsetY);
+    }
+
+    setTimeout(() => {
+      ghost.remove();
+    }, 0);
+
+    requestAnimationFrame(() => {
+      capitalEl.classList.add("dragging");
+    });
+  });
+
+  capitalEl.addEventListener("dragend", () => {
+    capitalEl.classList.remove("dragging");
+    capitalDraggedFromIdx = null;
+    clearDropIndicators(wrap);
+  });
+
+  // Touch Drag and Drop for capital only
+  capitalEl.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.target.closest(".shelf-tile-remove")) return;
+      touchCapitalDraggedFromIdx = idx;
+      touchCapitalMoved = false;
+      touchCapitalTarget = null;
+    },
+    { passive: true }
+  );
+
+  capitalEl.addEventListener(
+    "touchmove",
+    (e) => {
+      if (touchCapitalDraggedFromIdx === null) return;
+      touchCapitalMoved = true;
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+
+      capitalEl.classList.add("dragging");
+      const touch = e.touches[0];
+      const element = document.elementFromPoint(touch.clientX, touch.clientY);
+      const targetCol = element ? element.closest(".shelf-column") : null;
+
+      clearDropIndicators(wrap);
+      if (targetCol) {
+        targetCol.classList.add("capital-drop-hover");
+        touchCapitalTarget = targetCol;
+      } else {
+        touchCapitalTarget = null;
+      }
+    },
+    { passive: false }
+  );
+
+  capitalEl.addEventListener("touchend", () => {
+    if (touchCapitalDraggedFromIdx === null) return;
+    const fromIdx = touchCapitalDraggedFromIdx;
+    capitalEl.classList.remove("dragging");
+    touchCapitalDraggedFromIdx = null;
+    clearDropIndicators(wrap);
+
+    if (touchCapitalMoved && touchCapitalTarget) {
+      const targetIdx = Number(touchCapitalTarget.dataset.index);
+      touchCapitalTarget = null;
+      if (targetIdx !== fromIdx) {
+        word[fromIdx].hasStress = false;
+        word[targetIdx].hasStress = true;
+        renderShelf();
+      }
+    }
+  });
+
+  capitalEl.addEventListener("touchcancel", () => {
+    capitalEl.classList.remove("dragging");
+    touchCapitalDraggedFromIdx = null;
+    touchCapitalMoved = false;
+    touchCapitalTarget = null;
+    clearDropIndicators(wrap);
   });
 });
 
@@ -277,7 +413,7 @@ wrap.querySelectorAll(".shelf-mark-stress").forEach((stressEl) => {
     });
   });
 
-  stressEl.addEventListener("dragged", () => {
+  stressEl.addEventListener("dragend", () => {
     stressEl.classList.remove("dragging");
     stressDraggedFromIdx = null;
     clearDropIndicators(wrap);
@@ -298,7 +434,7 @@ wrap.querySelectorAll(".shelf-mark-stress").forEach((stressEl) => {
   stressEl.addEventListener(
     "touchmove",
     (e) => {
-      if (touchStressDraggedFromIdx === null) return;
+      if (touchCapitalDraggedFromIdx === null) return;
       touchStressMoved = true;
       if (e.cancelable) {
         e.preventDefault();
@@ -317,7 +453,7 @@ wrap.querySelectorAll(".shelf-mark-stress").forEach((stressEl) => {
         touchStressTarget = null;
       }
     },
-    { passive: true }
+    { passive: false }
   );
 
   stressEl.addEventListener("touchend", () => {
@@ -352,7 +488,7 @@ const columns = wrap.querySelectorAll(".shelf-column");
 columns.forEach((colEl) => {
   const idx = Number(colEl.dataset.index);
 
-  // Clicking tile when in stress-picking mode
+  // Clicking tile when in capital-picking or stress-picking mode
   colEl.addEventListener("click", (e) => {
     if (
       e.target.closest(".shelf-tile-remove") ||
@@ -360,18 +496,26 @@ columns.forEach((colEl) => {
     ) {
       return;
     }
+    if (isCapitalMode) {
+      e.stopPropagation();
+      toggleTileCapital(idx);
+      setCapital(false);
+      return;
+    }
     if (isStressMode) {
       e.stopPropagation();
       toggleTileStress(idx);
       setStressMode(false);
+      return;
     }
   });
 
   colEl.addEventListener("dragstart", (e) => {
     if (
       e.target.closest(".shelf-tile-remove") ||
-      e.target.closest(".shelf-mark-stress") ||
-      stressDraggedFromIdx !== null
+      e.target.closest(".shelf-mark-tile") ||
+      stressDraggedFromIdx !== null ||
+      capitalDraggedFromIdx !== null
     ) {
       return;
     }
@@ -434,6 +578,19 @@ columns.forEach((colEl) => {
       return;
     }
 
+    // Check if dragging capital symbol (from palette or from another syllable)
+    if (
+      e.dataTransfer.types.includes("application/x-cubes-move-capital") ||
+      e.dataTransfer.types.includes("application/x-cubes-capital") ||
+      capitalDraggedFromIdx !== null
+    ) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+      clearDropIndicators(wrap);
+      colEl.classList.add("capital-drop-hover");
+      return;
+    }
+
     if (draggedIndex === null) return;
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
@@ -450,11 +607,38 @@ columns.forEach((colEl) => {
   });
 
   colEl.addEventListener("dragleave", () => {
-    colEl.classList.remove("stress-drop-hover");
+    colEl.classList.remove("stress-drop-hover", "capital-drop-hover");
   });
 
   colEl.addEventListener("drop", (e) => {
-    colEl.classList.remove("stress-drop-hover");
+    colEl.classList.remove("stress-drop-hover", "capital-drop-hover");
+
+    // Handle moving capital from another syllable
+    const moveCapitalFrom = 
+    e.dataTransfer.getData("application/x-cubes-move-capital") ||
+    (capitalDraggedFromIdx !== null ? String(capitalDraggedFromIdx) : null);
+    if (moveCapitalFrom !== null && moveCapitalFrom !== "") {
+      e.preventDefault();
+      e.stopPropagation();
+      const fromIdx = Number(moveCapitalFrom);
+      capitalDraggedFromIdx = null;
+      clearDropIndicators(wrap);
+      if (fromIdx !== idx) {
+        word[fromIdx].hasCapital = false;
+        word[idx].hasCapital = true;
+        renderShelf();
+      }
+      return;
+    }
+
+    // Handle dropping capital symbol from palette
+    if (e.dataTransfer.getData("application/x-cubes-capital") === "true") {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleTileStress(idx, true);
+      setStressMode(false);
+      return;
+    }
 
     // Handle moving stress from another syllable
     const moveStressFrom = 
@@ -508,7 +692,8 @@ columns.forEach((colEl) => {
       if (
         e.target.closest(".shelf-tile-remove") ||
         e.target.closest(".shelf-mark-stress") ||
-        touchStressDraggedFromIdx !== null
+        touchStressDraggedFromIdx !== null ||
+        touchCapitalDraggedFromIdx !== null
       )
         return;
       touchDraggedIndex = idx;
@@ -618,7 +803,7 @@ export function initShelf() {
     resetBtn.addEventListener("click", clearWord);
   }
 
-  // Dismiss stress mode on outside click or Escape key
+  // Dismiss stress or capital mode on outside click or Escape key
   document.addEventListener("click", (e) => {
     if (isStressMode) {
       const isShelf = e.target.closest("#shelfWrap");
@@ -627,11 +812,19 @@ export function initShelf() {
         setStressMode(false);
       }
     }
+    if (isCapitalMode) {
+      const isShelf = e.target.closest("#shelfWrap");
+      const isCapBtn = e.target.closest("#btnSpecialCapital");
+      if (!isShelf && !isCapBtn) {
+        setCapital(false);
+      }
+    }
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && isStressMode) {
-      setStressMode(false);
+    if (e.key === "Escape") {
+      if (isStressMode) setStressMode(false);
+      if (isCapitalMode) setCapital(false);
     }
   });
 

@@ -85,6 +85,12 @@ export function renderSpecialPalette(symbols, containerEl, onSymbolClick) {
     if (sym.label === "Зб" || sym.title === "Заглавная буква") {
       btn.id = "btnSpecialCapital";
       btn.dataset.action = "capital";
+      btn.draggable = true;
+      btn.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("application/x-cubes-capital", "true");
+        e.dataTransfer.setData("text/plain", "CAPITAL");
+        e.dataTransfer.effectAllowed = "copy";
+      });
     } else if (sym.title === "Ударение") {
       btn.id = "btnSpecialStress";
       btn.dataset.action = "stress";
