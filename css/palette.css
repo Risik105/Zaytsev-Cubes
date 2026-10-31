@@ -123,18 +123,14 @@
   outline-offset: 2px;
 }
 
-.p-item.capital-active {
-  outline: 3px solid var(--green-dark) !important;
-  outline-offset: 2px;
-}
-
+.p-item.capital-active,
 .p-item.stress-active {
   outline: 3px solid var(--green-dark) !important;
   outline-offset: 2px;
-  animation: stressBtnPulse 1.2s infinite alternate ease-in-out;
+  animation: specialBtnPulse 1.2s infinite alternate ease-in-out;
 }
 
-@keyframes stressBtnPulse {
+@keyframes specialBtnPulse {
   0% {
     box-shadow: 0 0 0 0 rgba(51, 178, 51, 0.7);
   }

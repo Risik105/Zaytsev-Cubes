@@ -116,32 +116,37 @@
   z-index: 10;
 }
 
-.shelf-mark-stress {
+.shelf-mark-stress,
+.shelf-mark-capital {
   cursor: grab !important;
 }
 
-.shelf-mark-stress:active {
+.shelf-mark-stress:active,
+.shelf-mark-capital:active {
   cursor: grabbing !important;
 }
 
-.shelf-mark-stress.dragging {
+.shelf-mark-stress.dragging,
+.shelf-mark-capital.dragging {
   opacity: 0.45;
   cursor: grabbing !important;
   transform: scale(0.95);
 }
 
-/* Stress selection mode on shelf */
-#shelfWrap.stress-mode {
+/* Stress & Capital selection mode on shelf */
+#shelfWrap.stress-mode,
+#shelfWrap.capital-mode {
   outline: 2px dashed var(--green-dark);
   outline-offset: -2px;
 }
 
-#shelfWrap.stress-mode .shelf-column {
+#shelfWrap.stress-mode .shelf-column,
+#shelfWrap.capital-mode .shelf-column {
   cursor: pointer;
-  animation: stressPulse 1.4s infinite alternate ease-in-out;
+  animation: markPulse 1.4s infinite alternate ease-in-out;
 }
 
-@keyframes stressPulse {
+@keyframes markPulse {
   0% {
     box-shadow: 0 0 0 2px rgba(51, 178, 51, 0.4), 0 3px rgba(0, 0, 0, 0.16);
   }
@@ -150,12 +155,14 @@
   }
 }
 
-#shelfWrap.stress-mode .shelf-column:hover {
+#shelfWrap.stress-mode .shelf-column:hover,
+#shelfWrap.capital-mode .shelf-column:hover {
   outline: 2px solid var(--green-dark);
   transform: translateY(-2px);
 }
 
-.shelf-column.stress-drop-hover {
+.shelf-column.stress-drop-hover,
+.shelf-column.capital-drop-hover {
   outline: 3px solid var(--green-dark) !important;
   box-shadow: 0 0 10px rgba(51, 178, 51, 0.6) !important;
 }
