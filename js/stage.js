@@ -121,7 +121,7 @@ export function selectFace(textEl) {
 
   // Store detailed selection data
   selectedFaceData = {
-    primaryText: selectFace,
+    primaryText: selectedFace,
     secondaryText: secondaryText,
     isFlipped: isFlip,
   };
@@ -143,8 +143,64 @@ export function selectFace(textEl) {
   }
 }
 
+let addBtnTimeout = null;
+let toastTimeout = null;
+
+export function showToast(text, color, icon) {
+  let toast = document.getElementById("shelfToast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "shelfToast";
+    toast.className = "shelf-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    document.body.appendChild(toast);
+  }
+
+  // Clear previous timer and reset animation
+  toast.classList.remove("show");
+  void toast.offsetWidth;
+
+  const c = COLORS[color] || { face: "#33b233", dark: "#144714" };
+  const badgeContent = icon
+    ? `<img src="${icon}" style="width:20px;height:20px;display:block;" alt="${text}">`
+    : text;
+
+    toast.innerHTML = `
+      <span class="toast-icon">✓</span>
+      <span class="toast-text">Добавлено на полку:</span>
+      <span class="toast-badge" style="background:${c.face}; color:${c.dark};">${badgeContent}</span>
+      <span class="toast-hint" title="Посмотреть полку">↑</span>
+    `;
+    toast.classList.add("show");
+
+    // Clicking toast smoothly scrolls up to the self on mobile/tablet
+    toast.onclick = () => {
+      const shelf = document.getElementById("shelfWrap");
+      if (shelf) {
+        shelf.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    };
+
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2200);
+}
+
 function addSelectedToWord() {
   if (!selectedFace || !activeCube) return;
+
+  // Haptic feedback for touch screens / mobile
+  if (navigator.vibrate) {
+    try {
+      navigator.vibrate(40);
+    } catch (_) {}
+  }
+
+  const addedText = selectedFace;
+  const addedColor = activeCube.color;
+
   addWordTile({
     text: selectedFace,
     secondaryText: selectedFaceData ? selectedFaceData.secondaryText : null,
@@ -152,6 +208,27 @@ function addSelectedToWord() {
     color: activeCube.color,
     size: activeCube.size,
   });
+
+  // Micro-interaction on the button itself
+  const addBtn = document.getElementById("addBtn");
+  if (addBtn) {
+    addBtn.classList.remove("btn-add-success");
+    void addBtn.offsetWidth;
+    addBtn.classList.add("btn-add-success");
+    addBtn.innerHTML = `<span class="btn-add-check">✓</span> Добавлено!`;
+
+    if (addBtnTimeout) clearTimeout(addBtnTimeout);
+    addBtnTimeout = setTimeout(() => {
+      const currentBtn = document.getElementById("addBtn");
+      if (currentBtn) {
+        currentBtn.classList.remove("btn-add-success");
+        currentBtn.innerHTML = `Добавить к слову`;
+      }
+    }, 1100);
+  }
+
+  // Show floating toast notification (always visible regardless of scroll position)
+  showToast(addedText, addedColor);
 }
 
 function setupDrag() {

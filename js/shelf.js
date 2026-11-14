@@ -22,8 +22,23 @@ export function getWord() {
 }
 
 export function addWordTile(tile) {
+  tile.isNew = true;
   word.push(tile);
   renderShelf();
+
+  const wrap = document.getElementById("shelfWrap")
+  if (wrap) {
+    wrap.classList.remove("shelf-flash");
+    void wrap.offsetWidth;
+    wrap.classList.add("shelf-flash");
+    setTimeout(() => {
+      wrap.classList.remove("shelf-flash");
+    }, 600);
+  }
+
+  setTimeout(() => {
+    delete tile.isNew;
+  }, 600);
 }
 
 export function removeWordTile(index) {
@@ -211,7 +226,9 @@ export function renderShelf() {
         titleAttr = ' title="Кликни, чтобы поставить/снять заглавную букву"';
       }
 
-      return `<div class="shelf-column" draggable="true" data-index="${i}"${titleAttr}>
+      const isNewClass = w.isNew ? " tile-new" : "";
+
+      return `<div class="shelf-column${isNewClass}" draggable="true" data-index="${i}"${titleAttr}>
       ${marksHtml}
       <div class="shelf-tile${sizeClass}" style="background:${c.face};color:${c.dark}">
         ${content}

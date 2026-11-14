@@ -2,7 +2,7 @@ import { CUBES } from "./data/cubes.js";
 import { SPECIAL_SYMBOLS } from "./data/special-symbols.js";
 import { initShelf, addWordTile, toggleCapital, toggleStressMode } from "./shelf.js";
 import { renderPalette, renderSpecialPalette } from "./palette.js";
-import { openCube } from "./stage.js";
+import { openCube, showToast } from "./stage.js";
 
 function initApp() {
     // Initialize shelf state and reset listener
@@ -26,6 +26,10 @@ function initApp() {
                 toggleStressMode();
             } else {
                 addWordTile({ text: sym.label, color: "green", icon: sym.icon, size: "single" });
+                if (navigator.vibrate) {
+                    try { navigator.vibrate(40); } catch (_) {}
+                }
+                showToast(sym.label, "green", sym.icon);
             }
         });
     }

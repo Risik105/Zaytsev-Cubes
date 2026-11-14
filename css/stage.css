@@ -132,15 +132,133 @@ box proportions (w x h x d). Only the shared 3D behavior lives here.
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
+  min-width: 175px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 
 .btn-add:disabled {
   background: var(--disabled);
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .btn-add:not(:disabled):hover {
   background: var(--accent-hover);
+}
+
+.btn-add:not(:disabled):active {
+  transform: scale(0.96);
+}
+
+.btn-add-success {
+  background: var(--green-dark) !important;
+  color: var(--extra-white) !important;
+  box-shadow: 0 0 14px rgba(51, 178, 51, 0.5) !important;
+  animation: btnSuccessBounce 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes btnSuccessBounce {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+.btn-add-check {
+  font-weight: 800;
+  font-size: 15px;
+}
+
+/* Floating Toast notification for mobile/desktop */
+.shelf-toast {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translate(-50%, -20%) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10000;
+  background: rgba(30, 32, 35, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--extra-white);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 8px 18px 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.shelf-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  pointer-events: auto;
+}
+
+.shelf-toast:hover {
+  transform: translate(-50%, -1px) scale(1.02);
+  background: rgba(22, 24, 26, 0.98);
+}
+
+.shelf-toast:active {
+  transform: translate(-50%, 1px) scale(0.98);
+}
+
+.toast-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--green-dark);
+  color: var(--extra-white);
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.toast-text {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--alice-blue);
+  white-space: nowrap;
+}
+
+.toast-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.toast-hint {
+  font-size: 12px;
+  color: var(--muted);
+  opacity: 0.85;
+  margin-left: 2px;
 }
 
 .drag-hint {
